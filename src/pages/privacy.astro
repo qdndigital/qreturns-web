@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_NAME, SUPPORT_EMAIL } from '../consts';
+
+const title = `Privacy Policy — ${SITE_NAME}`;
+const description = `${SITE_NAME} Privacy Policy, GDPR compliance, and Shopify Protected Customer Data protections.`;
+---
+
+<Base title={title} description={description} noindex={true}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / privacy</div>
+      <h1>Privacy <em>Policy</em></h1>
+      <p>Last updated: August 2026</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="narrow space-y-8 text-sm text-ink-2 leading-relaxed">
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">1. Overview & Commitment</h2>
+        <p>
+          {SITE_NAME} ("we", "our", or "us") provides return and exchange management software for Shopify merchants. We are committed to protecting the privacy of merchants and their customers in full compliance with the EU General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), and Shopify's Protected Customer Data policies.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">2. Data We Process</h2>
+        <p class="mb-2">To process returns and exchanges on behalf of merchants, we access only the data necessary to fulfill customer requests:</p>
+        <ul class="list-disc pl-5 space-y-1 text-xs">
+          <li><strong>Order Details:</strong> Order ID, line item names, SKU, quantities, prices, and fulfillment timestamps.</li>
+          <li><strong>Customer Contact Info:</strong> Customer name, shipping address, and email address (processed securely for return shipping labels and notifications).</li>
+          <li><strong>Return Details:</strong> Selected return reasons, notes, uploaded defect photos, and preferred resolutions.</li>
+        </ul>
+      </div>
+
+      <div id="shopify">
+        <h2 class="font-display font-bold text-xl text-ink mb-3">3. Shopify Protected Customer Data & Security</h2>
+        <p>
+          All sensitive credentials, API tokens, and customer records are encrypted at rest using industry-standard AES-256-GCM encryption. Communication with Shopify is performed exclusively over TLS/HTTPS with cryptographic HMAC signature verification on all App Proxy and webhook requests.
+        </p>
+      </div>
+
+      <div id="gdpr">
+        <h2 class="font-display font-bold text-xl text-ink mb-3">4. GDPR Compliance & Data Subject Rights</h2>
+        <p class="mb-2">We support all Shopify mandatory compliance webhooks:</p>
+        <ul class="list-disc pl-5 space-y-1 text-xs">
+          <li><strong>Customer Data Request:</strong> We provide full data exports upon merchant request.</li>
+          <li><strong>Customer Data Redaction:</strong> When requested by Shopify, personal customer identifiers and uploaded attachments are permanently erased within 30 days.</li>
+          <li><strong>Shop Redaction:</strong> In the event of app uninstallation, all store data is pruned according to statutory data retention policies.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">5. Contact Us</h2>
+        <p>
+          For privacy inquiries or data protection officer inquiries, please contact us at <a href={`mailto:${SUPPORT_EMAIL}`} class="text-green-ink font-semibold underline">{SUPPORT_EMAIL}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

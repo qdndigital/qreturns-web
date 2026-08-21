@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import ReturnPortal from '../components/ReturnPortal.astro';
+import { APP_STORE_URL, SITE_NAME } from '../consts';
+
+const title = `Live Customer Portal Demo — ${SITE_NAME}`;
+const description = 'Try the interactive customer return portal demo. Test order lookup (#1042), reason taxonomy, photo uploads, size exchanges, and +10% store credit bonus.';
+---
+
+<Base title={title} description={description}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / live demo</div>
+      <h1>Customer Return Portal <em>Interactive Demo</em></h1>
+      <p>
+        Experience what your customers will see on <code>yourstore.com/apps/returns</code>. Test order lookup, select items, try out the +10% store credit bonus, and preview generated QR drop-off passes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Demo Account Helpers -->
+  <section class="py-6 bg-bg-2 border-b border-line">
+    <div class="wrap">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-line text-xs">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-green"></span>
+          <span class="font-bold text-ink">Preloaded Demo Account:</span>
+          <span class="text-muted">Use Order Number: <code class="font-mono font-bold text-green-ink bg-green-soft px-1.5 py-0.5 rounded border border-green-line">#1042</code> and Email: <code class="font-mono text-ink bg-bg-2 px-1.5 py-0.5 rounded border border-line">sarah.jenkins@example.com</code></span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-muted">Or track active return:</span>
+          <a href="/status?id=RET-894201" class="font-semibold text-green-ink hover:underline">
+            View Sample Tracking (RET-894201) →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Return Portal -->
+  <section class="sec">
+    <div class="portal-wrap">
+      <ReturnPortal />
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="cta-box rv">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          Ready to launch this portal on your Shopify store?
+        </h2>
+        <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
+          Install QReturns in 1 click and give your customers a modern return experience today.
+        </p>
+        <a href={APP_STORE_URL} class="btn btn-green btn-lg">
+          Install on Shopify Free
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

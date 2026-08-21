@@ -1,0 +1,448 @@
+---
+import Base from '../layouts/Base.astro';
+import { STORE_CONFIG } from '../lib/config';
+import { MOCK_RETURNS } from '../lib/mock-data';
+---
+
+<Base
+  title={`Track Return Status — ${STORE_CONFIG.name}`}
+  description="Check the real-time shipping, inspection, and refund status of your return request."
+>
+  <div class="portal-wrap py-10">
+    <!-- Lookup Card -->
+    <div class="portal-card mb-8">
+      <div class="max-w-md mx-auto text-center mb-6">
+        <span class="eyebrow"><span class="dot"></span> Real-Time Tracking</span>
+        <h1 class="font-display font-bold text-2xl md:text-3xl text-ink mt-2">Track Return Status</h1>
+        <p class="text-xs text-muted mt-1.5">
+          Enter your Return Reference ID (e.g. <strong class="font-mono text-ink">RET-894201</strong>) or Order Number to check real-time progress.
+        </p>
+      </div>
+
+      <form id="status-search-form" class="max-w-md mx-auto flex flex-col sm:flex-row gap-2.5" onsubmit="return false;">
+        <input
+          type="text"
+          id="status-search-input"
+          placeholder="e.g. RET-894201 or 1042"
+          class="form-input font-mono text-sm"
+          required
+        />
+        <button type="submit" id="btn-status-search" class="btn btn-accent shrink-0">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>Track</span>
+        </button>
+      </form>
+
+      <!-- Demo shortcuts -->
+      <div class="mt-5 pt-4 border-t border-line text-center">
+        <span class="kicker text-[10px]">Test Return IDs</span>
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-2">
+          <button
+            type="button"
+            class="status-demo-btn btn btn-line btn-sm text-xs font-mono"
+            data-return-id="RET-894201"
+          >
+            RET-894201 (In Transit · USPS)
+          </button>
+          <button
+            type="button"
+            class="status-demo-btn btn btn-line btn-sm text-xs font-mono"
+            data-return-id="RET-720194"
+          >
+            RET-720194 (Refund Completed)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div id="status-not-found" class="portal-card text-center py-10 hidden">
+      <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </div>
+      <h3 class="text-base font-bold text-ink" id="not-found-title">Return request not found</h3>
+      <p class="text-xs text-muted mt-1 max-w-sm mx-auto" id="not-found-desc">
+        We couldn't find an active return with that reference ID. Please double check the ID from your confirmation email.
+      </p>
+    </div>
+
+    <!-- Status Details Container -->
+    <div id="status-details-container" class="space-y-6 hidden">
+      <!-- Status Header Card -->
+      <div class="portal-card">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-line gap-3">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="text-lg font-mono font-bold text-ink" id="detail-return-id">RET-894201</span>
+              <span class="badge badge-green text-xs" id="detail-status-badge">In Transit</span>
+            </div>
+            <p class="text-xs text-muted mt-1" id="detail-order-meta">
+              Order #1042 · Submitted Aug 18, 2026 for Sarah Jenkins
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" class="btn btn-line btn-sm" id="btn-status-print">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              Print Details
+            </button>
+            <a href="/" class="btn btn-accent btn-sm">Start New Return</a>
+          </div>
+        </div>
+
+        <!-- Carrier & Tracking Info Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 py-5 border-b border-line text-xs">
+          <div>
+            <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Return Method</span>
+            <span class="font-semibold text-ink mt-0.5 block" id="detail-method-name">QR Code Drop-off</span>
+            <span class="text-muted text-[11px]" id="detail-method-carrier">USPS / Happy Returns Bar</span>
+          </div>
+
+          <div>
+            <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Tracking Number</span>
+            <span class="font-mono font-semibold text-ink mt-0.5 block" id="detail-tracking-number">9400 1118 9956 2839 0192 84</span>
+            <span class="text-green-ink text-[11px] font-medium" id="detail-tracking-status">In transit via USPS</span>
+          </div>
+
+          <div>
+            <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Refund Amount</span>
+            <span class="text-sm font-mono font-bold text-green-ink mt-0.5 block" id="detail-refund-amount">$148.50</span>
+            <span class="text-muted text-[11px]" id="detail-refund-type">Store Credit (+10% Bonus)</span>
+          </div>
+        </div>
+
+        <!-- Progress Timeline -->
+        <div class="pt-6">
+          <h2 class="text-sm font-bold text-ink uppercase tracking-wider mb-6">Return Progress Timeline</h2>
+          <div id="dynamic-timeline-box">
+            <!-- Timeline elements injected here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Items in this return -->
+      <div class="portal-card">
+        <h2 class="text-sm font-bold text-ink uppercase tracking-wider mb-4 pb-3 border-b border-line">
+          Items in this Return
+        </h2>
+        <div class="space-y-4" id="detail-items-list">
+          <!-- Item details injected here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script is:inline>
+  (function () {
+    const MOCK_DATA = {
+      'RET-894201': {
+        returnId: 'RET-894201',
+        orderNumber: '1042',
+        customerName: 'Sarah Jenkins',
+        createdAt: 'Aug 18, 2026',
+        status: 'in_transit',
+        statusLabel: 'In Transit',
+        statusClass: 'badge-blue',
+        methodName: 'QR Code Drop-off (FREE)',
+        carrier: 'USPS Ground Advantage',
+        trackingNumber: '9400 1118 9956 2839 0192 84',
+        refundAmount: '$148.50',
+        refundType: 'Store Credit (+10% Bonus)',
+        items: [
+          {
+            name: 'Retro Runner Sneaker',
+            variant: 'Cobalt Blue / 10.5 US',
+            quantity: 1,
+            price: '$135.00',
+            reason: "Doesn't fit style / look",
+            notes: 'Runs half a size larger than expected.',
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23eef2ff'/%3E%3Cpath d='M20 48C20 48 24 36 36 34L48 34L58 42L60 52H20V48Z' fill='%234f46e5'/%3E%3Crect x='18' y='52' width='44' height='6' rx='2' fill='%231e1b4b'/%3E%3C/svg%3E",
+          },
+        ],
+        timeline: [
+          {
+            title: 'Return Requested',
+            timestamp: 'Aug 18, 2026 · 10:14 AM',
+            desc: 'Return submission received and authorized.',
+            completed: true,
+            current: false,
+          },
+          {
+            title: 'QR Code Drop-off Scanned',
+            timestamp: 'Aug 18, 2026 · 04:30 PM',
+            desc: 'Scanned at USPS Partner Drop-off station.',
+            completed: true,
+            current: false,
+          },
+          {
+            title: 'In Transit to Returns Facility',
+            timestamp: 'Aug 19, 2026 · 02:45 PM',
+            desc: 'In transit to central warehouse. Estimated delivery Aug 22, 2026.',
+            completed: false,
+            current: true,
+          },
+          {
+            title: 'Delivered & Inspected',
+            timestamp: 'Pending delivery',
+            desc: 'Items will be inspected by our fulfillment team.',
+            completed: false,
+            current: false,
+          },
+          {
+            title: 'Store Credit Issued',
+            timestamp: 'Pending inspection',
+            desc: '$148.50 Gift Card will be emailed immediately.',
+            completed: false,
+            current: false,
+          },
+        ],
+      },
+      'RET-720194': {
+        returnId: 'RET-720194',
+        orderNumber: '1088',
+        customerName: 'Alex Rivera',
+        createdAt: 'Aug 17, 2026',
+        status: 'refund_completed',
+        statusLabel: 'Refund Completed',
+        statusClass: 'badge-green',
+        methodName: 'Prepaid UPS Ground Label',
+        carrier: 'UPS Ground',
+        trackingNumber: '1Z9999999999999999',
+        refundAmount: '$95.00',
+        refundType: 'Original Payment (Visa ··4242)',
+        items: [
+          {
+            name: 'Rose Oud Eau De Parfum (50ml)',
+            variant: '50ml Spray Bottle',
+            quantity: 1,
+            price: '$95.00',
+            reason: 'Wrong item received',
+            notes: 'Received Amber fragrance instead.',
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23fdf2f8'/%3E%3Crect x='28' y='32' width='24' height='30' rx='6' fill='%23db2777'/%3E%3Crect x='34' y='22' width='12' height='10' rx='2' fill='%239d174d'/%3E%3C/svg%3E",
+          },
+        ],
+        timeline: [
+          {
+            title: 'Return Requested',
+            timestamp: 'Aug 17, 2026 · 09:00 AM',
+            desc: 'Return request submitted.',
+            completed: true,
+            current: false,
+          },
+          {
+            title: 'Package Dropped Off & Shipped',
+            timestamp: 'Aug 17, 2026 · 01:20 PM',
+            desc: 'Scanned at UPS Store #4820.',
+            completed: true,
+            current: false,
+          },
+          {
+            title: 'Received & Verified',
+            timestamp: 'Aug 19, 2026 · 11:30 AM',
+            desc: 'Inspected at returns facility. Verified unopened.',
+            completed: true,
+            current: false,
+          },
+          {
+            title: 'Refund Issued to Original Payment',
+            timestamp: 'Aug 19, 2026 · 01:15 PM',
+            desc: '$95.00 refunded to Visa ending in 4242.',
+            completed: true,
+            current: true,
+          },
+        ],
+      },
+    };
+
+    const input = document.getElementById('status-search-input');
+    const form = document.getElementById('status-search-form');
+    const notFoundEl = document.getElementById('status-not-found');
+    const detailsEl = document.getElementById('status-details-container');
+
+    function searchReturn(query) {
+      if (!query) return;
+      const clean = query.trim().toUpperCase().replace(/^[#\s]+/, '');
+
+      // Check localStorage first
+      let returnObj = null;
+      try {
+        const stored = localStorage.getItem('qreturns_submissions');
+        if (stored) {
+          const map = JSON.parse(stored);
+          if (map[clean]) {
+            const raw = map[clean];
+            returnObj = {
+              returnId: raw.returnId,
+              orderNumber: raw.orderNumber,
+              customerName: raw.customerName || 'Customer',
+              createdAt: raw.createdAt || 'Today',
+              status: raw.status || 'return_approved',
+              statusLabel: 'Return Authorized',
+              statusClass: 'badge-green',
+              methodName: raw.method ? raw.method.name : 'QR Code Drop-off',
+              carrier: raw.method ? raw.method.carrier : 'USPS',
+              trackingNumber: raw.tracking ? raw.tracking.trackingNumber : 'Pending Drop-off Scan',
+              refundAmount: raw.financials ? '$' + raw.financials.finalRefundAmount.toFixed(2) : '$0.00',
+              refundType: raw.resolution === 'store_credit' ? 'Store Credit (+10% Bonus)' : 'Original Payment',
+              items: raw.items ? raw.items.map((i) => ({
+                name: i.item ? i.item.name : 'Item',
+                variant: i.item ? i.item.variant : '',
+                quantity: i.quantity,
+                price: i.item ? '$' + i.item.price.toFixed(2) : '$0.00',
+                reason: i.reason,
+                notes: i.notes || '',
+                image: i.item ? i.item.image : '',
+              })) : [],
+              timeline: [
+                {
+                  title: 'Return Requested & Authorized',
+                  timestamp: 'Today',
+                  desc: 'Return request submitted and authorized.',
+                  completed: true,
+                  current: true,
+                },
+                {
+                  title: 'Awaiting Carrier Drop-off Scan',
+                  timestamp: 'Pending drop-off',
+                  desc: 'Bring your package or show QR code at any drop-off station.',
+                  completed: false,
+                  current: false,
+                },
+                {
+                  title: 'Inspection & Refund',
+                  timestamp: 'Pending receipt',
+                  desc: 'Refund will be credited upon receipt at our center.',
+                  completed: false,
+                  current: false,
+                },
+              ],
+            };
+          }
+        }
+      } catch (e) {
+        console.warn(e);
+      }
+
+      if (!returnObj && MOCK_DATA[clean]) {
+        returnObj = MOCK_DATA[clean];
+      }
+
+      // Check by order number
+      if (!returnObj) {
+        Object.keys(MOCK_DATA).forEach((k) => {
+          if (MOCK_DATA[k].orderNumber === clean) {
+            returnObj = MOCK_DATA[k];
+          }
+        });
+      }
+
+      if (!returnObj) {
+        if (notFoundEl) notFoundEl.classList.remove('hidden');
+        if (detailsEl) detailsEl.classList.add('hidden');
+        return;
+      }
+
+      renderReturnDetails(returnObj);
+    }
+
+    function renderReturnDetails(ret) {
+      if (notFoundEl) notFoundEl.classList.add('hidden');
+      if (detailsEl) detailsEl.classList.remove('hidden');
+
+      document.getElementById('detail-return-id').textContent = ret.returnId;
+      const badge = document.getElementById('detail-status-badge');
+      badge.textContent = ret.statusLabel;
+      badge.className = 'badge ' + ret.statusClass + ' text-xs';
+
+      document.getElementById('detail-order-meta').textContent =
+        'Order #' + ret.orderNumber + ' · Submitted on ' + ret.createdAt + ' for ' + ret.customerName;
+
+      document.getElementById('detail-method-name').textContent = ret.methodName;
+      document.getElementById('detail-method-carrier').textContent = ret.carrier;
+      document.getElementById('detail-tracking-number').textContent = ret.trackingNumber;
+      document.getElementById('detail-refund-amount').textContent = ret.refundAmount;
+      document.getElementById('detail-refund-type').textContent = ret.refundType;
+
+      // Render timeline
+      let timelineHtml = '<div class="relative pl-6 space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-line">';
+      ret.timeline.forEach((event) => {
+        timelineHtml += `
+          <div class="relative flex items-start">
+            <div class="absolute -left-[24px] mt-0.5 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+              event.completed
+                ? 'bg-green text-white shadow-xs'
+                : event.current
+                ? 'bg-ink text-white ring-4 ring-green-soft shadow-xs'
+                : 'bg-white text-muted border border-line-2'
+            }">
+              ${
+                event.completed
+                  ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+                  : event.current
+                  ? '<span class="w-2 h-2 rounded-full bg-green-bright"></span>'
+                  : '<span class="w-1.5 h-1.5 rounded-full bg-faint"></span>'
+              }
+            </div>
+            <div class="flex-grow pl-3">
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                <h4 class="text-sm font-semibold ${event.completed || event.current ? 'text-ink' : 'text-muted'}">${event.title}</h4>
+                <span class="font-mono text-xs text-muted shrink-0">${event.timestamp}</span>
+              </div>
+              <p class="text-xs text-ink-2 mt-1 leading-relaxed">${event.desc}</p>
+            </div>
+          </div>
+        `;
+      });
+      timelineHtml += '</div>';
+      document.getElementById('dynamic-timeline-box').innerHTML = timelineHtml;
+
+      // Render items
+      let itemsHtml = '';
+      ret.items.forEach((item) => {
+        itemsHtml += `
+          <div class="flex items-start justify-between gap-3 text-xs p-3.5 rounded-xl border border-line bg-bg-2">
+            <div class="flex items-start gap-3">
+              <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg border border-line bg-white object-cover shrink-0" />
+              <div>
+                <h3 class="font-bold text-ink text-sm">${item.name}</h3>
+                <p class="text-muted">${item.variant} · Quantity: ${item.quantity}</p>
+                <p class="text-green-ink mt-0.5 font-medium">Reason: ${item.reason}</p>
+                ${item.notes ? `<p class="text-ink-2 italic mt-0.5">“${item.notes}”</p>` : ''}
+              </div>
+            </div>
+            <span class="font-mono font-bold text-ink text-sm">${item.price}</span>
+          </div>
+        `;
+      });
+      document.getElementById('detail-items-list').innerHTML = itemsHtml;
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        searchReturn(input?.value);
+      });
+    }
+
+    document.querySelectorAll('.status-demo-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const id = this.getAttribute('data-return-id');
+        if (input) input.value = id;
+        searchReturn(id);
+      });
+    });
+
+    document.getElementById('btn-status-print')?.addEventListener('click', () => window.print());
+
+    // Auto lookup from URL query params (e.g. ?id=RET-894201)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramId = urlParams.get('id') || urlParams.get('returnId') || urlParams.get('order');
+    if (paramId) {
+      if (input) input.value = paramId;
+      searchReturn(paramId);
+    }
+  })();
+</script>

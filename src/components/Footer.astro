@@ -1,0 +1,57 @@
+---
+import { SUPPORT_EMAIL, APP_STORE_URL, DEMO_URL, GUIDE_URL, SITE_NAME } from '../consts';
+const year = 2026;
+---
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="/" class="logo" aria-label={`${SITE_NAME} home`}>
+          <svg class="logomark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="27" height="27" rx="7" stroke="#101317" stroke-width="2"/>
+            <path d="M10 13.5H20C21.3807 13.5 22.5 14.6193 22.5 16C22.5 17.3807 21.3807 18.5 20 18.5H13" stroke="#00a36b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13 10.5L9.5 13.5L13 16.5" stroke="#00a36b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="18.5" r="1.2" fill="#00a36b"/>
+          </svg>
+          <span>{SITE_NAME}</span>
+        </a>
+        <p class="fd">
+          Automated returns, exchanges, and store credit management for Shopify. Give customers a self-service portal on your own domain and keep up to 40%+ return revenue in your store.
+        </p>
+      </div>
+
+      <div>
+        <h2>Product</h2>
+        <a href="/how-it-works">How it works</a>
+        <a href="/integrations">Shopify Integration</a>
+        <a href="/pricing">Pricing & Plans</a>
+        <a href="/demo">Live Portal Demo</a>
+        <a href="/faq">FAQ</a>
+      </div>
+
+      <div>
+        <h2>Resources</h2>
+        <a href={GUIDE_URL} target="_blank" rel="noopener">Documentation</a>
+        <a href="/faq#policies">Policy Templates</a>
+        <a href={`mailto:${SUPPORT_EMAIL}`}>Merchant Support</a>
+        <a href={APP_STORE_URL} target="_blank" rel="noopener">Shopify App Store</a>
+      </div>
+
+      <div>
+        <h2>Legal</h2>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy#gdpr">GDPR & Data Protection</a>
+        <a href="/privacy#shopify">Shopify Compliance</a>
+      </div>
+    </div>
+
+    <div class="fbar">
+      <span>© {year} {SITE_NAME}. All rights reserved.</span>
+      <span class="inline-flex items-center gap-1.5 font-mono text-[0.7rem] uppercase text-muted">
+        <span class="w-1.5 h-1.5 rounded-full bg-green"></span> Built natively for Shopify merchants
+      </span>
+    </div>
+  </div>
+</footer>

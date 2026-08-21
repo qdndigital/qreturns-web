@@ -1,0 +1,59 @@
+---
+interface Props {
+  currentStep?: number;
+}
+
+const { currentStep = 1 } = Astro.props;
+
+const steps = [
+  { step: 1, label: 'Order Lookup', short: 'Lookup' },
+  { step: 2, label: 'Select Items', short: 'Items' },
+  { step: 3, label: 'Return Reason', short: 'Reason' },
+  { step: 4, label: 'Return Method', short: 'Method' },
+  { step: 5, label: 'Review & Confirm', short: 'Review' },
+];
+---
+
+<div class="w-full pb-6 pt-2 select-none" id="return-stepper-container">
+  <div class="flex items-center justify-between relative">
+    <!-- Connecting Line Background -->
+    <div class="absolute top-1/2 left-4 right-4 -translate-y-1/2 h-0.5 bg-line z-0"></div>
+    <!-- Active Progress Bar -->
+    <div
+      class="absolute top-1/2 left-4 -translate-y-1/2 h-0.5 bg-green transition-all duration-300 z-0"
+      id="stepper-progress-line"
+      style={`width: ${((Math.min(currentStep, 5) - 1) / (steps.length - 1)) * 100}%`}
+    ></div>
+
+    {steps.map((s) => (
+      <div class="relative z-10 flex flex-col items-center group cursor-default" data-step-indicator={s.step}>
+        <div
+          class={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold transition-all duration-200 ${
+            s.step < currentStep
+              ? 'bg-green text-white shadow-xs'
+              : s.step === currentStep
+              ? 'bg-ink text-white ring-4 ring-green-soft shadow-xs'
+              : 'bg-white text-muted border border-line-2'
+          }`}
+          data-step-circle={s.step}
+        >
+          {s.step < currentStep ? (
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          ) : (
+            <span>{s.step}</span>
+          )}
+        </div>
+        <span
+          class={`mt-2 text-xs hidden sm:block font-medium tracking-tight ${
+            s.step === currentStep ? 'text-ink font-bold' : s.step < currentStep ? 'text-green-ink' : 'text-faint'
+          }`}
+          data-step-label={s.step}
+        >
+          {s.label}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>

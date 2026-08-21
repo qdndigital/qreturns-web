@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import { APP_STORE_URL, SITE_NAME } from '../consts';
+
+const title = `Shopify Integrations & Ecosystem — ${SITE_NAME}`;
+const description = 'How QReturns deeply integrates with Shopify App Proxy, Reverse Deliveries, Store Credit Accounts API, Draft Orders, and Files API.';
+
+const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+---
+
+<Base title={title} description={description}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / integrations</div>
+      <h1>Built directly on <em>Shopify APIs</em>.</h1>
+      <p>
+        QReturns is purpose-built for the modern Shopify platform (API Version 2026-04). We integrate natively with Shopify's core return objects, customer credit systems, and logistics APIs without brittle workarounds.
+      </p>
+    </div>
+  </section>
+
+  <!-- Key Shopify APIs Section -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="shead rv mb-10">
+        <span class="eyebrow"><span class="dot"></span> Native Integration</span>
+        <h2>Deep integration across every Shopify surface.</h2>
+      </div>
+
+      <div class="cards rv">
+        <!-- 1. App Proxy -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </div>
+            <h3>Shopify App Proxy</h3>
+            <p>
+              Renders your return portal directly on <code>shop.com/apps/returns</code>. All requests are verified via cryptographic HMAC signatures, ensuring zero third-party cookie issues and keeping your custom domain branding intact.
+            </p>
+          </div>
+          <span class="utag on mt-4">Native Surface</span>
+        </div>
+
+        <!-- 2. Store Credit & Gift Cards -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <h3>Store Credit & Gift Cards API</h3>
+            <p>
+              Directly interfaces with Shopify's Store Credit Accounts API on new customer accounts, and automatically falls back to Shopify Gift Cards on legacy stores.
+            </p>
+          </div>
+          <span class="utag on mt-4">Native Credit</span>
+        </div>
+
+        <!-- 3. Reverse Deliveries & RFOs -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <h3>Reverse Deliveries & Labels</h3>
+            <p>
+              Uses <code>reverseDeliveryCreateWithShipping</code> to issue carrier-tracked shipping labels and manages Reverse Fulfillment Orders (RFO) across single or multi-warehouse locations.
+            </p>
+          </div>
+          <span class="utag on mt-4">Shopify Logistics</span>
+        </div>
+
+        <!-- 4. Draft Orders for Exchanges -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3>Draft Orders API</h3>
+            <p>
+              When customers swap for different catalog items that have price differences, QReturns generates Shopify draft orders and customer checkout links to settle the balance effortlessly.
+            </p>
+          </div>
+          <span class="utag on mt-4">Exchange Settlement</span>
+        </div>
+
+        <!-- 5. Shopify Files API -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <h3>Shopify Files API</h3>
+            <p>
+              Damage and defect photos uploaded by customers are securely stored directly in your Shopify Files via <code>stagedUploadsCreate</code>—no external storage buckets required.
+            </p>
+          </div>
+          <span class="utag on mt-4">Secure Storage</span>
+        </div>
+
+        <!-- 6. Embedded Polaris App -->
+        <div class="card">
+          <div>
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h7"/><path d="M14 15h7"/></svg>
+            </div>
+            <h3>Shopify Polaris & App Bridge 4</h3>
+            <p>
+              Operates as an embedded application inside your Shopify Admin. You and your support team can approve returns, review photos, and issue refunds without leaving Shopify.
+            </p>
+          </div>
+          <span class="utag on mt-4">Embedded Admin</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & Privacy Section -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="split rv">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Security & Compliance</span>
+          <h2>Enterprise security and GDPR compliance built in.</h2>
+          <p class="lead">
+            We adhere strictly to Shopify's Protected Customer Data standards and stringent privacy requirements.
+          </p>
+          <ul class="checklist">
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>AES-256-GCM Encryption:</b> All access tokens and sensitive credentials are encrypted at rest.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>GDPR Webhooks:</b> Automated processing for <code>customers/data_request</code>, <code>customers/redact</code>, and <code>shop/redact</code>.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Tenant Isolation:</b> Strict database isolation by <code>shop_domain</code> on every single business model.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Forward-Only Tracking:</b> Monotonic tracking state ranks prevent race conditions and webhook out-of-order errors.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
+          <div class="font-mono text-xs uppercase font-bold text-ink pb-2 border-b border-line">
+            Compliance Checklist
+          </div>
+          <div class="space-y-2 text-xs text-ink-2">
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
+              <span>Shopify Protected Customer Data Level 2</span>
+              <span class="badge badge-green text-[0.65rem]">Compliant</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
+              <span>GDPR / CCPA Data Erasure Webhooks</span>
+              <span class="badge badge-green text-[0.65rem]">Automated</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
+              <span>HMAC-SHA256 Request Verification</span>
+              <span class="badge badge-green text-[0.65rem]">Active</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
+              <span>Shopify Billing API (Line-item billing)</span>
+              <span class="badge badge-green text-[0.65rem]">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-box rv">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          Connect QReturns with your Shopify store.
+        </h2>
+        <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
+          Install the app in 1 click and have your customer return portal live today.
+        </p>
+        <a href={APP_STORE_URL} class="btn btn-green btn-lg">
+          Install from Shopify App Store
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

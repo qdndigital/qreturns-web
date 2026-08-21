@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_NAME, SUPPORT_EMAIL } from '../consts';
+
+const title = `Terms of Service — ${SITE_NAME}`;
+const description = `${SITE_NAME} Terms of Service and Merchant Usage Agreement.`;
+---
+
+<Base title={title} description={description} noindex={true}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / terms</div>
+      <h1>Terms of <em>Service</em></h1>
+      <p>Last updated: August 2026</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="narrow space-y-8 text-sm text-ink-2 leading-relaxed">
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">1. Agreement to Terms</h2>
+        <p>
+          By installing, accessing, or using {SITE_NAME}, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not install or use the application.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">2. Description of Service</h2>
+        <p>
+          {SITE_NAME} provides returns, exchanges, and reverse logistics automation software designed specifically for merchants operating on the Shopify platform.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">3. Subscriptions & Billing</h2>
+        <p>
+          All subscription charges and transaction quotas are billed through Shopify's official Billing API. Paid plans include an initial trial period as described on our pricing page. You may upgrade, downgrade, or cancel your subscription at any time within your Shopify Admin app management portal.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">4. Merchant Responsibilities</h2>
+        <p>
+          Merchants are responsible for defining their own store return policies, ensuring compliance with local consumer protection laws, and fulfilling store credit or exchange obligations initiated through the customer return portal.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">5. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by applicable law, {SITE_NAME} shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from the use of our services.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display font-bold text-xl text-ink mb-3">6. Contact Information</h2>
+        <p>
+          Questions about these Terms of Service should be directed to <a href={`mailto:${SUPPORT_EMAIL}`} class="text-green-ink font-semibold underline">{SUPPORT_EMAIL}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,49 @@
+---
+import type { ReturnSubmission } from '../lib/types';
+
+interface Props {
+  submission: ReturnSubmission;
+}
+
+const { submission } = Astro.props;
+---
+
+<div class="relative pl-6 space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-line">
+  {submission.timeline.map((event) => {
+    return (
+      <div class="relative flex items-start group">
+        <!-- Dot / Icon Indicator -->
+        <div
+          class={`absolute -left-[24px] mt-0.5 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+            event.completed
+              ? 'bg-green text-white shadow-xs'
+              : event.current
+              ? 'bg-ink text-white ring-4 ring-green-soft shadow-xs animate-pulse'
+              : 'bg-white text-muted border border-line-2'
+          }`}
+        >
+          {event.completed ? (
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          ) : event.current ? (
+            <span class="w-2 h-2 rounded-full bg-green-bright"></span>
+          ) : (
+            <span class="w-1.5 h-1.5 rounded-full bg-faint"></span>
+          )}
+        </div>
+
+        <!-- Event Details -->
+        <div class="flex-grow pl-3">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+            <h4 class={`text-sm font-semibold ${event.completed || event.current ? 'text-ink' : 'text-muted'}`}>
+              {event.title}
+            </h4>
+            <span class="font-mono text-xs text-muted shrink-0">{event.timestamp}</span>
+          </div>
+          <p class="text-xs text-ink-2 mt-1 leading-relaxed">{event.description}</p>
+        </div>
+      </div>
+    );
+  })}
+</div>

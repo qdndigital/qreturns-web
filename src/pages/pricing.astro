@@ -1,0 +1,166 @@
+---
+import Base from '../layouts/Base.astro';
+import { APP_STORE_URL, DEMO_URL, SITE_NAME } from '../consts';
+import { PLANS, MATRIX, REVERSE_TRIAL_DAYS, PAYMENT_TRIAL_DAYS } from '../plans';
+
+const title = `Pricing Plans — ${SITE_NAME} for Shopify`;
+const description = `Four transparent plans from $0. Every new install gets ${REVERSE_TRIAL_DAYS} days of full Growth access, then settles on Free or your chosen plan. Billed securely through Shopify.`;
+
+const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+
+const cellClass = (v: string) => (v === '✓' ? 'yes' : v === '—' ? 'no' : '');
+---
+
+<Base title={title} description={description}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / pricing</div>
+      <h1>Start free. Scale as your returns grow.</h1>
+      <p>
+        Every installation opens with <strong>{REVERSE_TRIAL_DAYS} days of full Growth access</strong>—all rules, any-product exchanges, and shipping labels included with no credit card required. After that, keep using the <strong>Free plan forever</strong> or pick a tier matching your monthly return volume.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4-Tier Pricing Grid -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="plans plans-4">
+        {PLANS.map((p) => (
+          <div class={`plan ${p.feat ? 'feat' : ''} rv`}>
+            {p.badge && <span class="badge">{p.badge}</span>}
+            <span class="ptag">{p.name}</span>
+            <div class="price">
+              <b>{p.price}</b>
+              <span>{p.period}</span>
+            </div>
+            <span class="quota-tag">{p.quota}</span>
+            <p class="pdesc">{p.desc}</p>
+            <ul>
+              {p.features.map((f) => (
+                <li>
+                  <span set:html={checkIcon} />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={APP_STORE_URL}
+              class={`btn ${p.feat ? 'btn-accent' : 'btn-line'} btn-sm w-full mt-auto`}
+            >
+              {p.price === '$0' ? 'Install free' : 'Start 14-day trial'}
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <p class="kicker text-center mt-8">
+        Billed via Shopify Billing API · Cancel anytime · Paid tiers include a {PAYMENT_TRIAL_DAYS}-day Shopify payment trial
+      </p>
+    </div>
+  </section>
+
+  <!-- Comparison Matrix -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="shead ctr rv mb-10">
+        <span class="eyebrow"><span class="dot"></span> Feature Comparison</span>
+        <h2>Compare plan features side-by-side</h2>
+        <p class="lead-c">
+          Every tier includes our core customer portal and Shopify Admin integration.
+        </p>
+      </div>
+
+      <div class="rv overflow-x-auto bg-white rounded-2xl border border-line p-4 sm:p-6 shadow-xs">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th style="width: 32%;">Feature</th>
+              {PLANS.map((p) => (
+                <th class={p.feat ? 'colhi' : ''} style="text-align: center;">
+                  {p.name}
+                  <div class="text-xs font-normal text-muted mt-0.5">{p.price} / mo</div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {MATRIX.map((row) => (
+              <tr>
+                <th>{row.label}</th>
+                {row.cells.map((c, i) => (
+                  <td class={[cellClass(c), PLANS[i].feat ? 'colhi' : ''].filter(Boolean).join(' ')}>
+                    {c}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="kicker text-center mt-6">
+        * Return quotas are soft limits designed to notify merchants. Customers are never blocked at your return portal.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing FAQs -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="shead ctr rv mb-10">
+        <span class="eyebrow"><span class="dot"></span> Billing Details</span>
+        <h2>Frequently asked pricing questions</h2>
+      </div>
+
+      <div class="faq rv">
+        <details>
+          <summary>
+            <span>How does the 14-day reverse trial work?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p>
+            When you install QReturns, you immediately receive 14 days of full Growth plan features with zero payment commitment and no credit card required. At the end of the 14 days, your store automatically settles onto the Free plan ($0/mo) without interrupting active returns.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span>How are payments billed?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p>
+            All subscriptions are billed directly through Shopify's official Billing API as an app subscription on your regular Shopify invoice. You never need to enter payment card details with us.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span>Can I upgrade, downgrade, or cancel at any time?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p>
+            Yes. You can switch between Free, Starter, Growth, and Pro directly within your Shopify Admin settings under <code>Apps → QReturns → Plans & Billing</code>. Prorated charges are handled automatically by Shopify.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-box rv">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          Start your 14-day full access trial now.
+        </h2>
+        <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
+          Install QReturns from the Shopify App Store and configure your return portal in minutes.
+        </p>
+        <a href={APP_STORE_URL} class="btn btn-green btn-lg">
+          Install QReturns Free
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

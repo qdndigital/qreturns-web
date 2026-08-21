@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import { APP_STORE_URL, DEMO_URL, SITE_NAME } from '../consts';
+import { REVERSE_TRIAL_DAYS } from '../plans';
+
+const title = `How QReturns Works — Complete Returns & Exchanges Lifecycle`;
+const description = 'Explore the complete QReturns architecture: customer self-service, rules engine, revenue-saving resolutions, reverse shipping logistics, and Shopify native sync.';
+
+const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+---
+
+<Base title={title} description={description}>
+  <section class="phero">
+    <div class="wrap">
+      <div class="crumb"><a href="/">~</a> / how it works</div>
+      <h1>How the QReturns engine <em>works</em>.</h1>
+      <p>
+        No black box. QReturns provides a clean, four-stage returns lifecycle that delights shoppers, protects merchant margins through incentivized store credit and exchanges, and syncs directly with Shopify APIs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== 1. THE 4 STAGES ===================== -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="shead rv mb-10">
+        <span class="eyebrow"><span class="dot"></span> Stage by Stage</span>
+        <h2>The end-to-end customer return journey.</h2>
+        <p class="lead-c" style="margin-left: 0; text-align: left;">
+          Designed to resolve returns in under 2 minutes while guiding customers toward exchanges and store credit.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 rv">
+        <!-- Stage 1 -->
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
+          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+            Stage 01
+          </span>
+          <h3 class="font-display font-bold text-lg text-ink">Order Lookup & Verification</h3>
+          <p class="text-sm text-ink-2 leading-relaxed">
+            Customers visit <code>yourstore.com/apps/returns</code> on your domain. They enter their Order Number (supporting <code>#1042</code>, <code>1042</code>, or <code>ORD-1042</code>) and email/phone.
+          </p>
+          <ul class="checklist">
+            <li><span set:html={checkIcon} /><span>No customer login or password required</span></li>
+            <li><span set:html={checkIcon} /><span>Shopify App Proxy with HMAC signature security</span></li>
+            <li><span set:html={checkIcon} /><span>Instant validation against Shopify fulfillment date</span></li>
+          </ul>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
+          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+            Stage 02
+          </span>
+          <h3 class="font-display font-bold text-lg text-ink">Item Selection & Reason Taxonomy</h3>
+          <p class="text-sm text-ink-2 leading-relaxed">
+            The customer sees all items from their order with quantities and variant details. They select eligible items and provide structured return reasons.
+          </p>
+          <ul class="checklist">
+            <li><span set:html={checkIcon} /><span>Visual item picker with ineligible/final sale indicators</span></li>
+            <li><span set:html={checkIcon} /><span>Structured reason codes (Too small, defective, style, etc.)</span></li>
+            <li><span set:html={checkIcon} /><span>Optional damage photo uploads via Shopify Files API</span></li>
+          </ul>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
+          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+            Stage 03
+          </span>
+          <h3 class="font-display font-bold text-lg text-ink">Incentivized Resolution Choice</h3>
+          <p class="text-sm text-ink-2 leading-relaxed">
+            QReturns presents available resolutions configured by your return policy rules, highlighting value-added incentives.
+          </p>
+          <ul class="checklist">
+            <li><span set:html={checkIcon} /><span>Store Gift Card with customizable bonus (e.g. +10%)</span></li>
+            <li><span set:html={checkIcon} /><span>1-Click size/color variant exchange</span></li>
+            <li><span set:html={checkIcon} /><span>Original payment method refund</span></li>
+            <li><span set:html={checkIcon} /><span>Keep-item / green return for low-value goods</span></li>
+          </ul>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
+          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+            Stage 04
+          </span>
+          <h3 class="font-display font-bold text-lg text-ink">QR Code / Label & Shopify Sync</h3>
+          <p class="text-sm text-ink-2 leading-relaxed">
+            Once submitted, low-risk requests can auto-approve instantly, providing mobile QR passes or printable shipping labels.
+          </p>
+          <ul class="checklist">
+            <li><span set:html={checkIcon} /><span>Mobile QR drop-off pass (no printer needed)</span></li>
+            <li><span set:html={checkIcon} /><span>Prepaid PDF shipping label download</span></li>
+            <li><span set:html={checkIcon} /><span>Real-time status tracking timeline at <code>/status</code></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. RULES ENGINE DEEP DIVE ===================== -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="split rv">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Merchant Governance</span>
+          <h2>Automate rules with total precision.</h2>
+          <p class="lead">
+            Create granular policies that balance customer convenience with profitability. The QReturns rules engine evaluates criteria hierarchically.
+          </p>
+          <ul class="checklist">
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Delivery-Anchored Return Windows:</b> Calculate return windows from the carrier delivery date rather than order creation date.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Asymmetric Fee Deductions:</b> Apply percentage restocking fees per line item, or fixed return shipping fees per return.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Product & Tag Exemptions:</b> Automatically exclude final sale items, clearance collections, or intimate goods.</span>
+            </li>
+            <li>
+              <span set:html={checkIcon} />
+              <span><b>Smart Auto-Approval:</b> Instantly approve returns that meet your policy thresholds, freeing up merchant support time.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-4">
+          <div class="font-mono text-xs uppercase font-bold text-ink pb-3 border-b border-line">
+            Rule Evaluation Matrix
+          </div>
+          <div class="space-y-3 text-xs">
+            <div class="p-3 rounded-xl bg-bg-2 border border-line">
+              <div class="font-bold text-ink mb-1">1. Eligibility Check</div>
+              <div class="text-muted">Is order within 30 days of delivery? Are items free of "final-sale" tags?</div>
+            </div>
+            <div class="p-3 rounded-xl bg-bg-2 border border-line">
+              <div class="font-bold text-ink mb-1">2. Resolution Filtering</div>
+              <div class="text-muted">Which resolutions are allowed for this collection? Is store credit bonus active?</div>
+            </div>
+            <div class="p-3 rounded-xl bg-bg-2 border border-line">
+              <div class="font-bold text-ink mb-1">3. Fee Calculation</div>
+              <div class="text-muted">Calculate restocking fee (% per line) + return shipping fee (fixed amount).</div>
+            </div>
+            <div class="p-3 rounded-xl bg-green-soft/40 border border-green-line">
+              <div class="font-bold text-green-ink mb-1">4. Decision: Auto-Approve vs. Manual Review</div>
+              <div class="text-ink-2">If criteria pass: Issue Reverse Delivery label. If manual: Flag in Admin.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 3. STATE MACHINE ===================== -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="shead ctr rv mb-10">
+        <span class="eyebrow"><span class="dot"></span> Lifecycle Transparency</span>
+        <h2>Rock-solid state machine.</h2>
+        <p class="lead-c">
+          Every return follows a strictly verified transition path. Shopify remains the authoritative ledger for return objects and inventory adjustments.
+        </p>
+      </div>
+
+      <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs rv max-w-4xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-3 text-center text-xs font-mono font-bold">
+          <span class="p-2.5 rounded-lg bg-bg-2 border border-line">REQUESTED</span>
+          <span>→</span>
+          <span class="p-2.5 rounded-lg bg-green-soft text-green-ink border border-green-line">APPROVED</span>
+          <span>→</span>
+          <span class="p-2.5 rounded-lg bg-bg-2 border border-line">LABEL_ISSUED</span>
+          <span>→</span>
+          <span class="p-2.5 rounded-lg bg-bg-2 border border-line">IN_TRANSIT</span>
+          <span>→</span>
+          <span class="p-2.5 rounded-lg bg-bg-2 border border-line">DELIVERED</span>
+          <span>→</span>
+          <span class="p-2.5 rounded-lg bg-green-soft text-green-ink border border-green-line">COMPLETED</span>
+        </div>
+        <p class="text-xs text-muted text-center mt-6">
+          Forward-only tracking ranks prevent out-of-order webhook delivery from regressing return states.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-box rv">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
+          Experience the complete workflow today.
+        </h2>
+        <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
+          Try the interactive customer return portal demo or install QReturns on your Shopify store with {REVERSE_TRIAL_DAYS} days full access.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a href={APP_STORE_URL} class="btn btn-green btn-lg">Install on Shopify</a>
+          <a href={DEMO_URL} class="btn btn-line btn-lg" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
+            Try interactive demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

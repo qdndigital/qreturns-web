@@ -1,0 +1,1278 @@
+---
+import ReturnStepper from './ReturnStepper.astro';
+import { RETURN_REASONS, RETURN_METHODS, RESOLUTION_OPTIONS, STORE_CONFIG } from '../lib/config';
+import { MOCK_ORDERS } from '../lib/mock-data';
+---
+
+<div class="portal-wrap" id="qreturns-app">
+  <!-- Interactive Stepper -->
+  <ReturnStepper currentStep={1} />
+
+  <!-- Error Banner -->
+  <div
+    id="portal-error-banner"
+    class="hidden mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm flex items-start gap-3 transition-all"
+    role="alert"
+  >
+    <svg class="w-5 h-5 text-red-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <div class="flex-grow">
+      <p class="font-semibold" id="portal-error-title">Unable to proceed</p>
+      <p class="text-xs text-red-700 mt-0.5" id="portal-error-desc">Please verify your information.</p>
+    </div>
+    <button type="button" id="portal-error-close" class="text-red-500 hover:text-red-800 p-1">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+    </button>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 1: ORDER LOOKUP -->
+  <!-- ========================================================================= -->
+  <section id="step-1-lookup" class="portal-card">
+    <div class="max-w-md mx-auto text-center mb-8">
+      <span class="eyebrow"><span class="dot"></span> 30-Day Hassle-Free Returns</span>
+      <h1 class="font-display font-bold text-2xl md:text-3xl text-ink mt-3">Start your return</h1>
+      <p class="text-sm text-ink-2 mt-2 leading-relaxed">
+        Enter your order details below to lookup your purchase, select items, and generate a return shipping label or instant drop-off QR code.
+      </p>
+    </div>
+
+    <form id="order-lookup-form" class="max-w-md mx-auto space-y-4" onsubmit="return false;">
+      <div>
+        <label for="input-order-number" class="form-label">Order Number</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted text-sm font-mono font-medium">#</span>
+          <input
+            type="text"
+            id="input-order-number"
+            placeholder="1042"
+            class="form-input pl-8 font-mono text-sm"
+            required
+            autocomplete="off"
+          />
+        </div>
+        <p class="text-[11px] text-muted mt-1">Found on your order confirmation email or packing slip.</p>
+      </div>
+
+      <div>
+        <label for="input-email" class="form-label">Email Address</label>
+        <input
+          type="email"
+          id="input-email"
+          placeholder="sarah.jenkins@example.com"
+          class="form-input text-sm"
+          required
+          autocomplete="email"
+        />
+        <p class="text-[11px] text-muted mt-1">The email address used when placing the order.</p>
+      </div>
+
+      <button type="submit" id="btn-lookup-submit" class="btn btn-accent w-full mt-2 btn-lg">
+        <span>Find My Order</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </form>
+
+    <!-- Demo Quick-Fill Helpers -->
+    <div class="mt-8 pt-6 border-t border-line text-center">
+      <span class="kicker text-[11px]">Quick Demo Fill</span>
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-2.5">
+        <button
+          type="button"
+          class="demo-fill-btn btn btn-line btn-sm text-xs font-mono"
+          data-order="1042"
+          data-email="sarah.jenkins@example.com"
+        >
+          #1042 · Sarah (Multi-item)
+        </button>
+        <button
+          type="button"
+          class="demo-fill-btn btn btn-line btn-sm text-xs font-mono"
+          data-order="1088"
+          data-email="alex.rivera@example.com"
+        >
+          #1088 · Alex (Fragrance)
+        </button>
+        <button
+          type="button"
+          class="demo-fill-btn btn btn-line btn-sm text-xs font-mono text-amber-800 bg-amber-50/60 border-amber-200 hover:bg-amber-100/60"
+          data-order="1005"
+          data-email="expired@example.com"
+        >
+          #1005 · Expired Window Demo
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 2: SELECT ITEMS -->
+  <!-- ========================================================================= -->
+  <section id="step-2-items" class="portal-card hidden">
+    <!-- Order Meta Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-line gap-3">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-md bg-bg-2 border border-line-2 text-ink" id="order-meta-number">Order #1042</span>
+          <span class="badge badge-green" id="order-meta-status">Delivered</span>
+        </div>
+        <p class="text-xs text-muted mt-1.5" id="order-meta-details">Delivered on Aug 15, 2026 to Sarah Jenkins</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm text-xs text-muted hover:text-ink self-start sm:self-auto" id="btn-change-order">
+        Change Order
+      </button>
+    </div>
+
+    <div class="my-6">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base font-bold text-ink">Select items to return</h2>
+        <span class="text-xs text-muted" id="eligible-count-label">Select at least 1 item</span>
+      </div>
+
+      <!-- Items List Container -->
+      <div class="space-y-3" id="order-items-list">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="pt-5 border-t border-line flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3">
+      <button type="button" class="btn btn-line w-full sm:w-auto" id="btn-back-to-step-1">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+      <div class="flex items-center gap-3">
+        <div class="text-right hidden sm:block">
+          <span class="text-[11px] text-muted uppercase tracking-wider block">Estimated Value</span>
+          <span class="text-sm font-bold text-ink" id="items-selected-value">$0.00</span>
+        </div>
+        <button type="button" class="btn btn-accent w-full sm:w-auto" id="btn-proceed-to-reasons" disabled>
+          <span>Continue to Return Reasons</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 3: RETURN REASON -->
+  <!-- ========================================================================= -->
+  <section id="step-3-reasons" class="portal-card hidden">
+    <div class="mb-6">
+      <span class="eyebrow"><span class="dot"></span> Step 3 of 5</span>
+      <h2 class="text-xl font-bold text-ink mt-1">Why are you returning these items?</h2>
+      <p class="text-xs text-muted mt-1">Please select the reason for each item so we can improve our sizing and quality.</p>
+    </div>
+
+    <!-- Reasons per item -->
+    <div class="space-y-6 mb-8" id="items-reasons-container">
+      <!-- Rendered dynamically by JavaScript -->
+    </div>
+
+    <!-- Navigation -->
+    <div class="pt-5 border-t border-line flex items-center justify-between">
+      <button type="button" class="btn btn-line" id="btn-back-to-items">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-accent" id="btn-proceed-to-method">
+        <span>Continue to Return Method</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 4: RETURN METHOD & RESOLUTION -->
+  <!-- ========================================================================= -->
+  <section id="step-4-method" class="portal-card hidden">
+    <!-- Resolution Preference -->
+    <div class="mb-8">
+      <span class="eyebrow"><span class="dot"></span> How would you like your refund?</span>
+      <h2 class="text-xl font-bold text-ink mt-1">Select refund resolution</h2>
+      <p class="text-xs text-muted mt-1">Choose between instant store credit with a bonus or refund to your original card.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-4" id="resolution-options-list">
+        {RESOLUTION_OPTIONS.map((res, index) => (
+          <label class={`relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between ${
+            index === 0 ? 'border-green ring-2 ring-green-soft bg-emerald-50/20' : 'border-line hover:border-line-2 bg-white'
+          } resolution-card`} data-resolution-type={res.type}>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <input
+                  type="radio"
+                  name="resolution_choice"
+                  value={res.type}
+                  class="accent-green w-4 h-4 cursor-pointer"
+                  checked={index === 0}
+                />
+                {res.badge && (
+                  <span class="badge badge-green text-[10px]">{res.badge}</span>
+                )}
+              </div>
+              <h3 class="text-sm font-bold text-ink">{res.title}</h3>
+              <p class="text-xs text-ink-2 mt-1.5 leading-relaxed">{res.description}</p>
+            </div>
+            {res.bonusPercent && (
+              <div class="mt-3 pt-2.5 border-t border-green-line/60 text-xs font-semibold text-green-ink flex items-center gap-1.5" id="store-credit-bonus-indicator">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                <span>+10% Bonus added to refund</span>
+              </div>
+            )}
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <!-- Return Method Options -->
+    <div class="mb-8 pt-6 border-t border-line">
+      <span class="eyebrow"><span class="dot"></span> How will you return the items?</span>
+      <h2 class="text-xl font-bold text-ink mt-1">Select return method</h2>
+      <p class="text-xs text-muted mt-1">Flexible drop-off options tailored to your location.</p>
+
+      <div class="space-y-3 mt-4" id="return-methods-list">
+        {RETURN_METHODS.map((m, index) => (
+          <label class={`p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 ${
+            index === 0 ? 'border-green ring-2 ring-green-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
+          } method-card`} data-method-id={m.id}>
+            <input
+              type="radio"
+              name="method_choice"
+              value={m.id}
+              class="accent-green w-4 h-4 mt-1 cursor-pointer shrink-0"
+              checked={index === 0}
+            />
+            <div class="flex-grow">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm font-bold text-ink">{m.name}</h3>
+                  {m.noPrinterNeeded && (
+                    <span class="badge badge-green text-[10px]">No Printer Needed</span>
+                  )}
+                </div>
+                <span class="text-xs font-mono font-semibold text-green-ink">{m.feeLabel}</span>
+              </div>
+              <p class="text-xs text-ink-2 mt-1 leading-relaxed">{m.description}</p>
+              <div class="flex items-center gap-4 mt-2 text-[11px] text-muted">
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                  {m.carrier}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  {m.estimatedDays}
+                </span>
+              </div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="pt-5 border-t border-line flex items-center justify-between">
+      <button type="button" class="btn btn-line" id="btn-back-to-reasons">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-accent" id="btn-proceed-to-review">
+        <span>Review Return Summary</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 5: REVIEW RETURN -->
+  <!-- ========================================================================= -->
+  <section id="step-5-review" class="portal-card hidden">
+    <div class="mb-6">
+      <span class="eyebrow"><span class="dot"></span> Step 5 of 5</span>
+      <h2 class="text-xl font-bold text-ink mt-1">Review your return request</h2>
+      <p class="text-xs text-muted mt-1">Please confirm the items, reason, and return method before submitting.</p>
+    </div>
+
+    <!-- Review Grid -->
+    <div class="space-y-6">
+      <!-- Items Summary -->
+      <div class="rounded-xl border border-line p-4 bg-bg-2">
+        <div class="flex items-center justify-between pb-3 border-b border-line mb-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Items Being Returned</h3>
+          <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-items">Edit Items</button>
+        </div>
+        <div class="space-y-3" id="review-items-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Return Method & Resolution Summary -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="rounded-xl border border-line p-4 bg-bg-2">
+          <div class="flex items-center justify-between pb-2 border-b border-line mb-2.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Return Method</h3>
+            <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-method">Change</button>
+          </div>
+          <p class="text-sm font-semibold text-ink" id="review-method-name">QR Code Drop-off</p>
+          <p class="text-xs text-muted mt-0.5" id="review-method-carrier">USPS / Happy Returns Bar</p>
+          <p class="text-xs text-ink-2 mt-2" id="review-method-fee">Fee: FREE</p>
+        </div>
+
+        <div class="rounded-xl border border-line p-4 bg-bg-2">
+          <div class="flex items-center justify-between pb-2 border-b border-line mb-2.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Refund Destination</h3>
+            <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-resolution">Change</button>
+          </div>
+          <p class="text-sm font-semibold text-ink" id="review-resolution-title">Store Gift Card (+10% Bonus)</p>
+          <p class="text-xs text-muted mt-0.5" id="review-resolution-desc">Digital gift card emailed upon receipt</p>
+        </div>
+      </div>
+
+      <!-- Financial Calculation Box -->
+      <div class="rounded-xl border border-green-line bg-emerald-50/30 p-5 space-y-2.5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-green-ink mb-2">Estimated Refund Breakdown</h3>
+        <div class="flex justify-between text-xs text-ink-2">
+          <span>Items Value Subtotal:</span>
+          <span class="font-mono font-medium text-ink" id="calc-subtotal">$0.00</span>
+        </div>
+        <div class="flex justify-between text-xs text-ink-2">
+          <span>Return Shipping / Handling Fee:</span>
+          <span class="font-mono font-medium" id="calc-fee">FREE</span>
+        </div>
+        <div class="flex justify-between text-xs text-green-ink font-medium" id="calc-bonus-row">
+          <span>Store Credit Bonus (+10%):</span>
+          <span class="font-mono" id="calc-bonus">+$0.00</span>
+        </div>
+        <div class="pt-2.5 border-t border-green-line flex justify-between items-baseline">
+          <span class="text-sm font-bold text-ink">Total Estimated Refund:</span>
+          <span class="text-lg font-bold font-mono text-green-ink" id="calc-total">$0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation & Submission -->
+    <div class="pt-6 mt-6 border-t border-line flex items-center justify-between">
+      <button type="button" class="btn btn-line" id="btn-back-to-method-step">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-accent btn-lg" id="btn-submit-return">
+        <span id="submit-btn-text">Submit Return Request</span>
+        <svg id="submit-btn-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+        <svg id="submit-btn-spinner" class="w-4 h-4 animate-spin hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- STEP 6: CONFIRMATION & SUCCESS -->
+  <!-- ========================================================================= -->
+  <section id="step-6-success" class="portal-card hidden">
+    <div class="text-center max-w-md mx-auto mb-8">
+      <div class="w-14 h-14 rounded-full bg-emerald-100 border border-green-line text-green flex items-center justify-center mx-auto mb-4 shadow-sm animate-bounce-short">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <span class="badge badge-green mb-2">Return Authorized</span>
+      <h2 class="font-display font-bold text-2xl md:text-3xl text-ink">Return Request Submitted!</h2>
+      <p class="text-sm text-ink-2 mt-2 leading-relaxed">
+        Your return reference is <strong class="font-mono text-ink font-bold" id="success-return-id">RET-894201</strong>. A confirmation email with your instructions has been sent to <span id="success-customer-email" class="font-medium text-ink">sarah.jenkins@example.com</span>.
+      </p>
+    </div>
+
+    <!-- QR Code / Label Card -->
+    <div class="max-w-lg mx-auto rounded-2xl border border-line bg-bg-2 p-6 text-center mb-8 shadow-xs">
+      <span class="kicker text-[11px] block mb-2" id="success-method-kicker">Mobile Drop-Off QR Code</span>
+
+      <!-- Simulated SVG QR Code -->
+      <div class="bg-white p-4 rounded-xl border border-line-2 inline-block shadow-sm mb-4">
+        <svg class="w-40 h-40 mx-auto" viewBox="0 0 100 100" fill="none">
+          <!-- QR corners -->
+          <rect x="5" y="5" width="26" height="26" rx="4" fill="#101317" />
+          <rect x="9" y="9" width="18" height="18" rx="2" fill="#ffffff" />
+          <rect x="13" y="13" width="10" height="10" rx="1" fill="#00a36b" />
+
+          <rect x="69" y="5" width="26" height="26" rx="4" fill="#101317" />
+          <rect x="73" y="9" width="18" height="18" rx="2" fill="#ffffff" />
+          <rect x="77" y="13" width="10" height="10" rx="1" fill="#00a36b" />
+
+          <rect x="5" y="69" width="26" height="26" rx="4" fill="#101317" />
+          <rect x="9" y="73" width="18" height="18" rx="2" fill="#ffffff" />
+          <rect x="13" y="77" width="10" height="10" rx="1" fill="#00a36b" />
+
+          <!-- QR Data patterns -->
+          <rect x="36" y="8" width="6" height="6" fill="#101317" />
+          <rect x="46" y="14" width="6" height="10" fill="#101317" />
+          <rect x="56" y="8" width="8" height="6" fill="#101317" />
+
+          <rect x="36" y="24" width="8" height="8" fill="#101317" />
+          <rect x="48" y="28" width="14" height="6" fill="#101317" />
+
+          <rect x="8" y="36" width="12" height="6" fill="#101317" />
+          <rect x="24" y="36" width="6" height="14" fill="#101317" />
+          <rect x="34" y="36" width="14" height="14" fill="#00a36b" />
+          <rect x="52" y="38" width="10" height="8" fill="#101317" />
+          <rect x="66" y="36" width="14" height="6" fill="#101317" />
+          <rect x="84" y="36" width="8" height="14" fill="#101317" />
+
+          <rect x="8" y="46" width="12" height="12" fill="#101317" />
+          <rect x="52" y="50" width="8" height="14" fill="#101317" />
+          <rect x="64" y="46" width="16" height="12" fill="#101317" />
+
+          <rect x="36" y="54" width="12" height="12" fill="#101317" />
+          <rect x="36" y="70" width="8" height="14" fill="#101317" />
+          <rect x="48" y="68" width="14" height="8" fill="#101317" />
+          <rect x="66" y="66" width="10" height="10" fill="#101317" />
+          <rect x="80" y="68" width="12" height="12" fill="#00a36b" />
+          <rect x="66" y="80" width="10" height="12" fill="#101317" />
+        </svg>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button type="button" class="btn btn-accent btn-sm w-full sm:w-auto" id="btn-download-label">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download Return Label (PDF)</span>
+        </button>
+        <button type="button" class="btn btn-line btn-sm w-full sm:w-auto" id="btn-print-qr">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print Drop-off Pass</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Next Steps Checklist -->
+    <div class="max-w-lg mx-auto rounded-xl border border-line p-5 bg-white mb-8">
+      <h3 class="text-sm font-bold text-ink mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Next Steps & Drop-off Instructions
+      </h3>
+      <ol class="space-y-2.5 text-xs text-ink-2 pl-4 list-decimal marker:font-mono marker:font-bold marker:text-muted" id="success-instructions-list">
+        <li>Pack items securely in their original packaging or any clean shipping box.</li>
+        <li>Bring the package to any authorized carrier drop-off location or store.</li>
+        <li>Show your QR code or attach the printed shipping label to the outside.</li>
+        <li>Please drop off by <strong class="text-ink font-semibold" id="success-deadline">Sept 19, 2026</strong>.</li>
+      </ol>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-line">
+      <a href="#" id="btn-track-this-return" class="btn btn-green w-full sm:w-auto">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        Track Live Return Status
+      </a>
+      <button type="button" id="btn-start-another" class="btn btn-ghost w-full sm:w-auto text-xs text-muted">
+        Start Another Return
+      </button>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================================================= -->
+<!-- CLIENT-SIDE SCRIPT: RETURN WIZARD LOGIC -->
+<!-- ========================================================================= -->
+<script is:inline>
+  (function () {
+    // Config & reasons data passed from server
+    const REASONS = [
+      { code: 'wrong_size', label: 'Wrong size (Too large / too small)' },
+      { code: 'doesnt_fit', label: "Doesn't fit style / look" },
+      { code: 'changed_mind', label: 'Changed my mind / No longer needed' },
+      { code: 'damaged_item', label: 'Damaged item (Torn, stained, broken)' },
+      { code: 'defective_item', label: 'Defective / Poor quality' },
+      { code: 'wrong_item_received', label: 'Wrong item received' },
+      { code: 'other', label: 'Other (Please specify)' },
+    ];
+
+    const METHODS = {
+      qr_dropoff: {
+        id: 'qr_dropoff',
+        name: 'QR Code Drop-off (No Printer Needed)',
+        carrier: 'USPS / Happy Returns Bar',
+        fee: 0,
+        feeLabel: 'FREE',
+        noPrinterNeeded: true,
+      },
+      prepaid_label: {
+        id: 'prepaid_label',
+        name: 'Prepaid Shipping Label',
+        carrier: 'UPS Ground',
+        fee: 4.99,
+        feeLabel: '$4.99',
+        noPrinterNeeded: false,
+      },
+      in_store: {
+        id: 'in_store',
+        name: 'Return In-Store',
+        carrier: 'Retail Storefront',
+        fee: 0,
+        feeLabel: 'FREE',
+        noPrinterNeeded: true,
+      },
+    };
+
+    // Client Wizard State
+    let state = {
+      currentStep: 1,
+      order: null,
+      selectedItems: {}, // itemId -> { quantity, reason, notes }
+      selectedResolution: 'store_credit',
+      selectedMethodId: 'qr_dropoff',
+      createdSubmission: null,
+    };
+
+    // DOM Elements
+    const elements = {
+      stepperContainer: document.getElementById('return-stepper-container'),
+      stepperProgress: document.getElementById('stepper-progress-line'),
+      errorBanner: document.getElementById('portal-error-banner'),
+      errorTitle: document.getElementById('portal-error-title'),
+      errorDesc: document.getElementById('portal-error-desc'),
+      errorClose: document.getElementById('portal-error-close'),
+      step1: document.getElementById('step-1-lookup'),
+      step2: document.getElementById('step-2-items'),
+      step3: document.getElementById('step-3-reasons'),
+      step4: document.getElementById('step-4-method'),
+      step5: document.getElementById('step-5-review'),
+      step6: document.getElementById('step-6-success'),
+      inputOrder: document.getElementById('input-order-number'),
+      inputEmail: document.getElementById('input-email'),
+      btnLookup: document.getElementById('btn-lookup-submit'),
+      orderMetaNumber: document.getElementById('order-meta-number'),
+      orderMetaStatus: document.getElementById('order-meta-status'),
+      orderMetaDetails: document.getElementById('order-meta-details'),
+      orderItemsList: document.getElementById('order-items-list'),
+      itemsSelectedValue: document.getElementById('items-selected-value'),
+      btnProceedReasons: document.getElementById('btn-proceed-to-reasons'),
+      itemsReasonsContainer: document.getElementById('items-reasons-container'),
+      reviewItemsList: document.getElementById('review-items-list'),
+      reviewMethodName: document.getElementById('review-method-name'),
+      reviewMethodCarrier: document.getElementById('review-method-carrier'),
+      reviewMethodFee: document.getElementById('review-method-fee'),
+      reviewResolutionTitle: document.getElementById('review-resolution-title'),
+      reviewResolutionDesc: document.getElementById('review-resolution-desc'),
+      calcSubtotal: document.getElementById('calc-subtotal'),
+      calcFee: document.getElementById('calc-fee'),
+      calcBonus: document.getElementById('calc-bonus'),
+      calcBonusRow: document.getElementById('calc-bonus-row'),
+      calcTotal: document.getElementById('calc-total'),
+      btnSubmitReturn: document.getElementById('btn-submit-return'),
+      submitText: document.getElementById('submit-btn-text'),
+      submitIcon: document.getElementById('submit-btn-icon'),
+      submitSpinner: document.getElementById('submit-btn-spinner'),
+      successReturnId: document.getElementById('success-return-id'),
+      successCustomerEmail: document.getElementById('success-customer-email'),
+      btnTrackReturn: document.getElementById('btn-track-this-return'),
+      btnDownloadLabel: document.getElementById('btn-download-label'),
+      btnPrintQr: document.getElementById('btnPrintQr') || document.getElementById('btn-print-qr'),
+    };
+
+    // Helper: Show Error
+    function showError(title, desc) {
+      if (elements.errorBanner) {
+        elements.errorTitle.textContent = title;
+        elements.errorDesc.textContent = desc;
+        elements.errorBanner.classList.remove('hidden');
+        elements.errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function clearError() {
+      if (elements.errorBanner) {
+        elements.errorBanner.classList.add('hidden');
+      }
+    }
+
+    if (elements.errorClose) {
+      elements.errorClose.addEventListener('click', clearError);
+    }
+
+    // Helper: Update Stepper UI
+    function updateStepper(step) {
+      state.currentStep = step;
+      const totalSteps = 5;
+      const pct = ((Math.min(step, 5) - 1) / (totalSteps - 1)) * 100;
+      if (elements.stepperProgress) {
+        elements.stepperProgress.style.width = pct + '%';
+      }
+
+      document.querySelectorAll('[data-step-indicator]').forEach((el) => {
+        const s = parseInt(el.getAttribute('data-step-indicator'), 10);
+        const circle = el.querySelector('[data-step-circle]');
+        const label = el.querySelector('[data-step-label]');
+
+        if (s < step) {
+          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-green text-white shadow-xs';
+          circle.innerHTML = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+          if (label) label.className = 'mt-2 text-xs hidden sm:block font-medium tracking-tight text-green-ink';
+        } else if (s === step) {
+          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-ink text-white ring-4 ring-green-soft shadow-xs';
+          circle.innerHTML = '<span>' + s + '</span>';
+          if (label) label.className = 'mt-2 text-xs hidden sm:block font-bold tracking-tight text-ink';
+        } else {
+          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-white text-muted border border-line-2';
+          circle.innerHTML = '<span>' + s + '</span>';
+          if (label) label.className = 'mt-2 text-xs hidden sm:block font-medium tracking-tight text-faint';
+        }
+      });
+    }
+
+    // Step Transition
+    function goToStep(step) {
+      clearError();
+      const allStepSections = [elements.step1, elements.step2, elements.step3, elements.step4, elements.step5, elements.step6];
+      allStepSections.forEach((sec) => sec && sec.classList.add('hidden'));
+
+      if (step === 1 && elements.step1) elements.step1.classList.remove('hidden');
+      if (step === 2 && elements.step2) {
+        renderOrderItems();
+        elements.step2.classList.remove('hidden');
+      }
+      if (step === 3 && elements.step3) {
+        renderReasonStep();
+        elements.step3.classList.remove('hidden');
+      }
+      if (step === 4 && elements.step4) {
+        updateResolutionAndMethodUI();
+        elements.step4.classList.remove('hidden');
+      }
+      if (step === 5 && elements.step5) {
+        renderReviewStep();
+        elements.step5.classList.remove('hidden');
+      }
+      if (step === 6 && elements.step6) {
+        renderSuccessStep();
+        elements.step6.classList.remove('hidden');
+      }
+
+      updateStepper(step);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Quick Fill demo buttons
+    document.querySelectorAll('.demo-fill-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        if (elements.inputOrder) elements.inputOrder.value = this.getAttribute('data-order') || '';
+        if (elements.inputEmail) elements.inputEmail.value = this.getAttribute('data-email') || '';
+        clearError();
+        performLookup();
+      });
+    });
+
+    // Lookup Logic
+    function performLookup() {
+      const orderNumRaw = (elements.inputOrder?.value || '').trim();
+      const emailRaw = (elements.inputEmail?.value || '').trim().toLowerCase();
+
+      if (!orderNumRaw) {
+        showError('Order number required', 'Please enter your order number.');
+        elements.inputOrder?.focus();
+        return;
+      }
+      if (!emailRaw || !emailRaw.includes('@')) {
+        showError('Valid email required', 'Please enter the email address used during checkout.');
+        elements.inputEmail?.focus();
+        return;
+      }
+
+      const cleanNum = orderNumRaw.replace(/^[#\s]+/, '').replace(/^ord[-_]?/i, '');
+
+      // Mock lookup simulation
+      const mockOrders = [
+        {
+          id: 'ord_1042',
+          orderNumber: '1042',
+          email: 'sarah.jenkins@example.com',
+          customerName: 'Sarah Jenkins',
+          orderDate: 'Aug 12, 2026',
+          deliveredDate: 'Aug 15, 2026',
+          currency: 'USD',
+          items: [
+            {
+              id: 'item_1',
+              name: 'Heavyweight Fleece Pullover',
+              variant: 'Charcoal / Large',
+              price: 88.0,
+              quantity: 2,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23f1f3f5'/%3E%3Cpath d='M24 28L32 20H48L56 28L52 36L44 32V60H36V32L28 36L24 28Z' fill='%23343a40'/%3E%3C/svg%3E",
+              isEligible: true,
+            },
+            {
+              id: 'item_2',
+              name: 'Retro Runner Sneaker',
+              variant: 'Cobalt Blue / 10.5 US',
+              price: 135.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23eef2ff'/%3E%3Cpath d='M20 48C20 48 24 36 36 34L48 34L58 42L60 52H20V48Z' fill='%234f46e5'/%3E%3Crect x='18' y='52' width='44' height='6' rx='2' fill='%231e1b4b'/%3E%3C/svg%3E",
+              isEligible: true,
+            },
+            {
+              id: 'item_3',
+              name: 'Smoked Amber Soy Candle (8oz)',
+              variant: 'Warm Vanilla & Cedar',
+              price: 28.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23fef3c7'/%3E%3Crect x='28' y='32' width='24' height='32' rx='4' fill='%23d97706'/%3E%3Cpath d='M40 20C40 20 44 24 40 28C36 24 40 20 40 20Z' fill='%23f59e0b'/%3E%3C/svg%3E",
+              isEligible: true,
+            },
+            {
+              id: 'item_4',
+              name: 'Merino Wool Ankle Socks (Final Sale)',
+              variant: 'Heather Grey / Medium',
+              price: 14.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23f3f4f6'/%3E%3Cpath d='M30 22H46V42L52 50C52 54 48 58 44 58H36C32 58 30 54 30 50V22Z' fill='%236b7280'/%3E%3C/svg%3E",
+              isEligible: false,
+              ineligibleReason: 'Final sale item — excluded from standard returns policy',
+            },
+          ],
+        },
+        {
+          id: 'ord_1088',
+          orderNumber: '1088',
+          email: 'alex.rivera@example.com',
+          customerName: 'Alex Rivera',
+          orderDate: 'Aug 14, 2026',
+          deliveredDate: 'Aug 17, 2026',
+          currency: 'USD',
+          items: [
+            {
+              id: 'item_5',
+              name: 'Wireless Studio Headphones',
+              variant: 'Matte Sage Green',
+              price: 199.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23e6fcf5'/%3E%3Cpath d='M26 38C26 30.268 32.268 24 40 24C47.732 24 54 30.268 54 38V50C54 52.2091 52.2091 54 50 54H48V40H52V38C52 31.3726 46.6274 26 40 26C33.3726 26 28 31.3726 28 38V40H32V54H30C27.7909 54 26 52.2091 26 50V38Z' fill='%230ca678'/%3E%3C/svg%3E",
+              isEligible: true,
+            },
+            {
+              id: 'item_6',
+              name: 'Rose Oud Eau De Parfum (50ml)',
+              variant: '50ml Spray Bottle',
+              price: 95.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23fdf2f8'/%3E%3Crect x='28' y='32' width='24' height='30' rx='6' fill='%23db2777'/%3E%3Crect x='34' y='22' width='12' height='10' rx='2' fill='%239d174d'/%3E%3C/svg%3E",
+              isEligible: true,
+            },
+          ],
+        },
+        {
+          id: 'ord_1005',
+          orderNumber: '1005',
+          email: 'expired@example.com',
+          customerName: 'Morgan Lee',
+          orderDate: 'May 10, 2026',
+          deliveredDate: 'May 14, 2026',
+          currency: 'USD',
+          items: [
+            {
+              id: 'item_7',
+              name: 'Heavyweight Fleece Pullover',
+              variant: 'Black / M',
+              price: 88.0,
+              quantity: 1,
+              image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' fill='none'%3E%3Crect width='80' height='80' rx='12' fill='%23f1f3f5'/%3E%3Cpath d='M24 28L32 20H48L56 28L52 36L44 32V60H36V32L28 36L24 28Z' fill='%23343a40'/%3E%3C/svg%3E",
+              isEligible: false,
+              ineligibleReason: 'Delivered over 30 days ago (return window has closed)',
+            },
+          ],
+        },
+      ];
+
+      const found = mockOrders.find(
+        (o) => o.orderNumber === cleanNum && o.email.toLowerCase() === emailRaw
+      );
+
+      if (!found) {
+        const orderDifferentEmail = mockOrders.find((o) => o.orderNumber === cleanNum);
+        if (orderDifferentEmail) {
+          showError(
+            'Email mismatch',
+            'Order #' + cleanNum + ' was found, but the email address does not match our records.'
+          );
+        } else {
+          showError(
+            'Order not found',
+            'No order found matching #' + cleanNum + ' and ' + emailRaw + '. Please verify your receipt.'
+          );
+        }
+        return;
+      }
+
+      // Check if all items are ineligible
+      const eligibleItems = found.items.filter((i) => i.isEligible);
+      if (eligibleItems.length === 0) {
+        showError(
+          'Return window expired',
+          'Items in this order are past the 30-day return window or marked as final sale.'
+        );
+        return;
+      }
+
+      state.order = found;
+      state.selectedItems = {};
+      goToStep(2);
+    }
+
+    if (elements.btnLookup) {
+      elements.btnLookup.addEventListener('click', performLookup);
+    }
+
+    // Step 2: Render Items
+    function renderOrderItems() {
+      if (!state.order) return;
+
+      elements.orderMetaNumber.textContent = 'Order #' + state.order.orderNumber;
+      elements.orderMetaDetails.textContent = 'Delivered on ' + state.order.deliveredDate + ' to ' + state.order.customerName;
+
+      let html = '';
+      state.order.items.forEach((item) => {
+        const isSelected = !!state.selectedItems[item.id];
+        const selectedQty = state.selectedItems[item.id]?.quantity || 1;
+
+        if (item.isEligible) {
+          html += `
+            <div class="p-4 rounded-xl border transition-all flex items-start gap-3.5 sm:gap-4 ${
+              isSelected ? 'border-green ring-2 ring-green-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
+            }" data-item-card="${item.id}">
+              <input
+                type="checkbox"
+                class="item-checkbox accent-green w-5 h-5 rounded mt-1 cursor-pointer shrink-0"
+                data-item-id="${item.id}"
+                ${isSelected ? 'checked' : ''}
+              />
+              <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover bg-bg-2 border border-line shrink-0" />
+              <div class="flex-grow min-w-0">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
+                  <div>
+                    <h3 class="text-sm font-semibold text-ink leading-snug">${item.name}</h3>
+                    <p class="text-xs text-muted mt-0.5">${item.variant}</p>
+                  </div>
+                  <span class="text-sm font-mono font-bold text-ink shrink-0">$${item.price.toFixed(2)}</span>
+                </div>
+
+                <div class="flex items-center justify-between mt-3 pt-2.5 border-t border-line/60">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-muted">Quantity:</span>
+                    ${
+                      item.quantity > 1
+                        ? `
+                        <select class="item-qty-select form-select py-1 px-2 text-xs w-20 h-7" data-item-id="${item.id}">
+                          ${Array.from({ length: item.quantity }, (_, i) => i + 1)
+                            .map((q) => `<option value="${q}" ${q === selectedQty ? 'selected' : ''}>${q}</option>`)
+                            .join('')}
+                        </select>
+                      `
+                        : `<span class="text-xs font-mono font-semibold text-ink">1</span>`
+                    }
+                  </div>
+                  <span class="badge badge-green text-[10px]">Eligible for return</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="p-4 rounded-xl border border-line-2 bg-bg-2 opacity-75 flex items-start gap-3.5 sm:gap-4">
+              <div class="w-5 h-5 rounded border border-line-2 bg-white/60 flex items-center justify-center text-muted mt-1 shrink-0">
+                <svg class="w-3 h-3 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </div>
+              <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover bg-bg-2 border border-line shrink-0 grayscale opacity-80" />
+              <div class="flex-grow min-w-0">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
+                  <div>
+                    <h3 class="text-sm font-semibold text-ink-2 leading-snug">${item.name}</h3>
+                    <p class="text-xs text-muted mt-0.5">${item.variant}</p>
+                  </div>
+                  <span class="text-sm font-mono text-muted shrink-0">$${item.price.toFixed(2)}</span>
+                </div>
+                <div class="mt-2.5 pt-2 border-t border-line flex items-center gap-1.5 text-xs text-amber-800">
+                  <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span>${item.ineligibleReason || 'Ineligible for return'}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      elements.orderItemsList.innerHTML = html;
+      bindItemSelectionEvents();
+      updateItemsSelectionSummary();
+    }
+
+    function bindItemSelectionEvents() {
+      document.querySelectorAll('.item-checkbox').forEach((checkbox) => {
+        checkbox.addEventListener('change', function () {
+          const itemId = this.getAttribute('data-item-id');
+          const item = state.order.items.find((i) => i.id === itemId);
+          if (this.checked) {
+            const qtySelect = document.querySelector(`.item-qty-select[data-item-id="${itemId}"]`);
+            const qty = qtySelect ? parseInt(qtySelect.value, 10) : 1;
+            state.selectedItems[itemId] = {
+              quantity: qty,
+              reason: 'wrong_size',
+              notes: '',
+            };
+          } else {
+            delete state.selectedItems[itemId];
+          }
+          renderOrderItems();
+        });
+      });
+
+      document.querySelectorAll('.item-qty-select').forEach((select) => {
+        select.addEventListener('change', function () {
+          const itemId = this.getAttribute('data-item-id');
+          if (state.selectedItems[itemId]) {
+            state.selectedItems[itemId].quantity = parseInt(this.value, 10);
+            updateItemsSelectionSummary();
+          }
+        });
+      });
+    }
+
+    function updateItemsSelectionSummary() {
+      const selectedKeys = Object.keys(state.selectedItems);
+      const totalSelected = selectedKeys.length;
+
+      let totalValue = 0;
+      selectedKeys.forEach((k) => {
+        const item = state.order.items.find((i) => i.id === k);
+        if (item) {
+          totalValue += item.price * state.selectedItems[k].quantity;
+        }
+      });
+
+      elements.itemsSelectedValue.textContent = '$' + totalValue.toFixed(2);
+
+      if (totalSelected > 0) {
+        elements.btnProceedReasons.removeAttribute('disabled');
+      } else {
+        elements.btnProceedReasons.setAttribute('disabled', 'true');
+      }
+    }
+
+    // Step 2 Navigation
+    document.getElementById('btn-change-order')?.addEventListener('click', () => goToStep(1));
+    document.getElementById('btn-back-to-step-1')?.addEventListener('click', () => goToStep(1));
+    elements.btnProceedReasons?.addEventListener('click', () => {
+      if (Object.keys(state.selectedItems).length === 0) {
+        showError('Select an item', 'Please choose at least one eligible item to return.');
+        return;
+      }
+      goToStep(3);
+    });
+
+    // Step 3: Render Reasons
+    function renderReasonStep() {
+      let html = '';
+      const selectedIds = Object.keys(state.selectedItems);
+
+      selectedIds.forEach((id) => {
+        const item = state.order.items.find((i) => i.id === id);
+        const itemState = state.selectedItems[id];
+        if (!item) return;
+
+        html += `
+          <div class="rounded-xl border border-line p-5 bg-white space-y-4" data-reason-box="${item.id}">
+            <div class="flex items-center gap-3 pb-3 border-b border-line">
+              <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover border border-line bg-bg-2 shrink-0" />
+              <div>
+                <h3 class="text-sm font-bold text-ink">${item.name}</h3>
+                <p class="text-xs text-muted">Returning: ${itemState.quantity} unit(s) · ${item.variant}</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label">Return Reason</label>
+              <select class="form-select item-reason-dropdown" data-item-id="${item.id}">
+                ${REASONS.map(
+                  (r) => `<option value="${r.code}" ${r.code === itemState.reason ? 'selected' : ''}>${r.label}</option>`
+                ).join('')}
+              </select>
+            </div>
+
+            <div class="reason-notes-container ${itemState.reason === 'other' || itemState.reason === 'damaged_item' || itemState.reason === 'defective_item' ? '' : 'hidden'}" data-notes-box="${item.id}">
+              <label class="form-label">Additional Details / Explanation</label>
+              <textarea
+                class="form-textarea item-notes-input text-xs"
+                rows="2"
+                placeholder="Please describe the issue or fit in detail..."
+                data-item-id="${item.id}"
+              >${itemState.notes || ''}</textarea>
+            </div>
+
+            ${
+              itemState.reason === 'damaged_item' || itemState.reason === 'defective_item'
+                ? `
+                <div class="p-3 rounded-lg bg-bg-2 border border-line-2 text-xs text-ink-2">
+                  <span class="font-semibold block mb-1">Upload Photo (Optional for faster approval)</span>
+                  <div class="flex items-center gap-2">
+                    <label class="btn btn-line btn-sm cursor-pointer text-xs">
+                      <span>Choose Image</span>
+                      <input type="file" class="hidden" accept="image/*" />
+                    </label>
+                    <span class="text-muted text-[11px]">JPG, PNG under 10MB</span>
+                  </div>
+                </div>
+              `
+                : ''
+            }
+          </div>
+        `;
+      });
+
+      elements.itemsReasonsContainer.innerHTML = html;
+
+      // Event listeners for reason dropdowns
+      document.querySelectorAll('.item-reason-dropdown').forEach((dropdown) => {
+        dropdown.addEventListener('change', function () {
+          const itemId = this.getAttribute('data-item-id');
+          const reason = this.value;
+          if (state.selectedItems[itemId]) {
+            state.selectedItems[itemId].reason = reason;
+          }
+          renderReasonStep();
+        });
+      });
+
+      document.querySelectorAll('.item-notes-input').forEach((textarea) => {
+        textarea.addEventListener('input', function () {
+          const itemId = this.getAttribute('data-item-id');
+          if (state.selectedItems[itemId]) {
+            state.selectedItems[itemId].notes = this.value;
+          }
+        });
+      });
+    }
+
+    document.getElementById('btn-back-to-items')?.addEventListener('click', () => goToStep(2));
+    document.getElementById('btn-proceed-to-method')?.addEventListener('click', () => goToStep(4));
+
+    // Step 4: Method & Resolution Handlers
+    function updateResolutionAndMethodUI() {
+      // Bind resolution radios
+      document.querySelectorAll('input[name="resolution_choice"]').forEach((r) => {
+        r.addEventListener('change', function () {
+          state.selectedResolution = this.value;
+          document.querySelectorAll('.resolution-card').forEach((card) => {
+            const isMatch = card.getAttribute('data-resolution-type') === state.selectedResolution;
+            if (isMatch) {
+              card.className = 'relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between border-green ring-2 ring-green-soft bg-emerald-50/20 resolution-card';
+            } else {
+              card.className = 'relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between border-line hover:border-line-2 bg-white resolution-card';
+            }
+          });
+        });
+      });
+
+      // Bind method radios
+      document.querySelectorAll('input[name="method_choice"]').forEach((r) => {
+        r.addEventListener('change', function () {
+          state.selectedMethodId = this.value;
+          document.querySelectorAll('.method-card').forEach((card) => {
+            const isMatch = card.getAttribute('data-method-id') === state.selectedMethodId;
+            if (isMatch) {
+              card.className = 'p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 border-green ring-2 ring-green-soft bg-emerald-50/10 method-card';
+            } else {
+              card.className = 'p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 border-line hover:border-line-2 bg-white method-card';
+            }
+          });
+        });
+      });
+    }
+
+    document.getElementById('btn-back-to-reasons')?.addEventListener('click', () => goToStep(3));
+    document.getElementById('btn-proceed-to-review')?.addEventListener('click', () => goToStep(5));
+
+    // Step 5: Render Review
+    function renderReviewStep() {
+      const selectedKeys = Object.keys(state.selectedItems);
+      let subtotal = 0;
+
+      let itemsHtml = '';
+      selectedKeys.forEach((id) => {
+        const item = state.order.items.find((i) => i.id === id);
+        const itemState = state.selectedItems[id];
+        if (!item) return;
+
+        const lineTotal = item.price * itemState.quantity;
+        subtotal += lineTotal;
+
+        const reasonObj = REASONS.find((r) => r.code === itemState.reason);
+
+        itemsHtml += `
+          <div class="flex items-start justify-between gap-3 text-xs">
+            <div class="flex items-start gap-2.5">
+              <img src="${item.image}" alt="${item.name}" class="w-10 h-10 rounded border border-line object-cover shrink-0" />
+              <div>
+                <span class="font-bold text-ink">${item.name} (x${itemState.quantity})</span>
+                <p class="text-muted">${item.variant}</p>
+                <p class="text-green-ink mt-0.5">Reason: ${reasonObj ? reasonObj.label : itemState.reason}</p>
+                ${itemState.notes ? `<p class="text-ink-2 italic">“${itemState.notes}”</p>` : ''}
+              </div>
+            </div>
+            <span class="font-mono font-semibold text-ink">$${lineTotal.toFixed(2)}</span>
+          </div>
+        `;
+      });
+
+      elements.reviewItemsList.innerHTML = itemsHtml;
+
+      const methodObj = METHODS[state.selectedMethodId] || METHODS.qr_dropoff;
+      elements.reviewMethodName.textContent = methodObj.name;
+      elements.reviewMethodCarrier.textContent = methodObj.carrier;
+      elements.reviewMethodFee.textContent = 'Fee: ' + methodObj.feeLabel;
+
+      let resolutionTitle = 'Original Payment Method';
+      let resolutionDesc = 'Credited back to your card';
+      if (state.selectedResolution === 'store_credit') {
+        resolutionTitle = 'Store Gift Card (+10% Bonus)';
+        resolutionDesc = 'Digital credit emailed instantly upon delivery';
+      } else if (state.selectedResolution === 'exchange') {
+        resolutionTitle = 'Variant Exchange';
+        resolutionDesc = 'Replacement item shipped with free shipping';
+      }
+
+      elements.reviewResolutionTitle.textContent = resolutionTitle;
+      elements.reviewResolutionDesc.textContent = resolutionDesc;
+
+      // Calculate totals
+      const fee = state.selectedResolution === 'store_credit' ? 0 : methodObj.fee;
+      const bonus = state.selectedResolution === 'store_credit' ? (subtotal * 10) / 100 : 0;
+      const totalRefund = Math.max(0, subtotal - fee + bonus);
+
+      elements.calcSubtotal.textContent = '$' + subtotal.toFixed(2);
+      elements.calcFee.textContent = fee === 0 ? 'FREE' : '-$' + fee.toFixed(2);
+      elements.calcBonus.textContent = '+$' + bonus.toFixed(2);
+
+      if (state.selectedResolution === 'store_credit') {
+        elements.calcBonusRow.classList.remove('hidden');
+      } else {
+        elements.calcBonusRow.classList.add('hidden');
+      }
+
+      elements.calcTotal.textContent = '$' + totalRefund.toFixed(2);
+    }
+
+    document.getElementById('btn-edit-items')?.addEventListener('click', () => goToStep(2));
+    document.getElementById('btn-edit-method')?.addEventListener('click', () => goToStep(4));
+    document.getElementById('btn-edit-resolution')?.addEventListener('click', () => goToStep(4));
+    document.getElementById('btn-back-to-method-step')?.addEventListener('click', () => goToStep(4));
+
+    // Submit Return Action
+    elements.btnSubmitReturn?.addEventListener('click', function () {
+      // Show loading spinner
+      elements.submitText.textContent = 'Submitting Return...';
+      elements.submitIcon.classList.add('hidden');
+      elements.submitSpinner.classList.remove('hidden');
+      elements.btnSubmitReturn.setAttribute('disabled', 'true');
+
+      setTimeout(() => {
+        // Create mock submission
+        const randomDigits = Math.floor(100000 + Math.random() * 900000);
+        const returnId = 'RET-' + randomDigits;
+
+        const submission = {
+          returnId: returnId,
+          orderNumber: state.order.orderNumber,
+          customerEmail: state.order.email,
+          customerName: state.order.customerName,
+          status: 'return_approved',
+          method: METHODS[state.selectedMethodId] || METHODS.qr_dropoff,
+          resolution: state.selectedResolution,
+        };
+
+        state.createdSubmission = submission;
+
+        // Save to localStorage for status lookup page
+        try {
+          const stored = localStorage.getItem('qreturns_submissions');
+          const map = stored ? JSON.parse(stored) : {};
+          map[returnId] = submission;
+          localStorage.setItem('qreturns_submissions', JSON.stringify(map));
+        } catch (e) {
+          console.warn(e);
+        }
+
+        // Reset submit button state
+        elements.submitText.textContent = 'Submit Return Request';
+        elements.submitIcon.classList.remove('hidden');
+        elements.submitSpinner.classList.add('hidden');
+        elements.btnSubmitReturn.removeAttribute('disabled');
+
+        goToStep(6);
+      }, 700);
+    });
+
+    // Step 6: Render Success
+    function renderSuccessStep() {
+      if (!state.createdSubmission) return;
+
+      elements.successReturnId.textContent = state.createdSubmission.returnId;
+      elements.successCustomerEmail.textContent = state.order.email;
+
+      if (elements.btnTrackReturn) {
+        elements.btnTrackReturn.href = '/status?id=' + state.createdSubmission.returnId;
+      }
+
+      // Drop-off deadline (14 days from now)
+      const deadline = new Date();
+      deadline.setDate(deadline.getDate() + 14);
+      const deadlineStr = deadline.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const deadlineEl = document.getElementById('success-deadline');
+      if (deadlineEl) deadlineEl.textContent = deadlineStr;
+    }
+
+    elements.btnDownloadLabel?.addEventListener('click', function () {
+      alert('Return shipping label PDF downloaded to your device.');
+    });
+
+    elements.btnPrintQr?.addEventListener('click', function () {
+      window.print();
+    });
+
+    document.getElementById('btn-start-another')?.addEventListener('click', function () {
+      state.order = null;
+      state.selectedItems = {};
+      state.createdSubmission = null;
+      if (elements.inputOrder) elements.inputOrder.value = '';
+      if (elements.inputEmail) elements.inputEmail.value = '';
+      goToStep(1);
+    });
+  })();
+</script>

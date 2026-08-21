@@ -1,0 +1,40 @@
+---
+import { NAV, APP_STORE_URL, DEMO_URL, SITE_NAME } from '../consts';
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+---
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label={`${SITE_NAME} home`}>
+      <svg class="logomark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="7" stroke="#101317" stroke-width="2"/>
+        <path d="M10 13.5H20C21.3807 13.5 22.5 14.6193 22.5 16C22.5 17.3807 21.3807 18.5 20 18.5H13" stroke="#00a36b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 10.5L9.5 13.5L13 16.5" stroke="#00a36b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="18.5" r="1.2" fill="#00a36b"/>
+      </svg>
+      <span>{SITE_NAME}</span>
+    </a>
+
+    <nav class="nav-links" id="nav-links">
+      {NAV.map(([href, label]) => (
+        <a href={href} class={path === href ? 'active' : ''}>
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="nav-cta">
+      <a href={DEMO_URL} class="btn btn-line btn-sm hidden sm:inline-flex">
+        Portal Demo
+      </a>
+      <a href={APP_STORE_URL} class="btn btn-accent btn-sm">
+        Install free
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+        <svg class="ic-open" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="ic-close" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="nav-overlay"></div>
