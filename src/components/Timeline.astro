@@ -16,9 +16,9 @@ const { submission } = Astro.props;
         <div
           class={`absolute -left-[24px] mt-0.5 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
             event.completed
-              ? 'bg-green text-white shadow-xs'
+              ? 'bg-brand text-white shadow-xs'
               : event.current
-              ? 'bg-ink text-white ring-4 ring-green-soft shadow-xs animate-pulse'
+              ? 'bg-ink text-white ring-4 ring-brand-soft shadow-xs animate-pulse'
               : 'bg-white text-muted border border-line-2'
           }`}
         >
@@ -27,7 +27,7 @@ const { submission } = Astro.props;
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           ) : event.current ? (
-            <span class="w-2 h-2 rounded-full bg-green-bright"></span>
+            <span class="w-2 h-2 rounded-full bg-brand-bright"></span>
           ) : (
             <span class="w-1.5 h-1.5 rounded-full bg-faint"></span>
           )}

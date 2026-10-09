@@ -36,7 +36,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
       <span class="eyebrow"><span class="dot"></span> 30-Day Hassle-Free Returns</span>
       <h1 class="font-display font-bold text-2xl md:text-3xl text-ink mt-3">Start your return</h1>
       <p class="text-sm text-ink-2 mt-2 leading-relaxed">
-        Enter your order details below to lookup your purchase, select items, and generate a return shipping label or instant drop-off QR code.
+        Pick your order, choose the items and a reason, and see how the item gets back to the store.
       </p>
     </div>
 
@@ -119,7 +119,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
       <div>
         <div class="flex items-center gap-2">
           <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-md bg-bg-2 border border-line-2 text-ink" id="order-meta-number">Order #1042</span>
-          <span class="badge badge-green" id="order-meta-status">Delivered</span>
+          <span class="badge badge-brand" id="order-meta-status">Delivered</span>
         </div>
         <p class="text-xs text-muted mt-1.5" id="order-meta-details">Delivered on Aug 15, 2026 to Sarah Jenkins</p>
       </div>
@@ -202,13 +202,13 @@ import { MOCK_ORDERS } from '../lib/mock-data';
     <!-- Resolution Preference -->
     <div class="mb-8">
       <span class="eyebrow"><span class="dot"></span> How would you like your refund?</span>
-      <h2 class="text-xl font-bold text-ink mt-1">Select refund resolution</h2>
-      <p class="text-xs text-muted mt-1">Choose between instant store credit with a bonus or refund to your original card.</p>
+      <h2 class="text-xl font-bold text-ink mt-1">Your refund</h2>
+      <p class="text-xs text-muted mt-1">Refunds go back to your original payment method.</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-4" id="resolution-options-list">
+      <div class="grid grid-cols-1 gap-3.5 mt-4" id="resolution-options-list">
         {RESOLUTION_OPTIONS.map((res, index) => (
           <label class={`relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between ${
-            index === 0 ? 'border-green ring-2 ring-green-soft bg-emerald-50/20' : 'border-line hover:border-line-2 bg-white'
+            index === 0 ? 'border-brand ring-2 ring-brand-soft bg-emerald-50/20' : 'border-line hover:border-line-2 bg-white'
           } resolution-card`} data-resolution-type={res.type}>
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -216,18 +216,18 @@ import { MOCK_ORDERS } from '../lib/mock-data';
                   type="radio"
                   name="resolution_choice"
                   value={res.type}
-                  class="accent-green w-4 h-4 cursor-pointer"
+                  class="accent-brand w-4 h-4 cursor-pointer"
                   checked={index === 0}
                 />
                 {res.badge && (
-                  <span class="badge badge-green text-[10px]">{res.badge}</span>
+                  <span class="badge badge-brand text-[10px]">{res.badge}</span>
                 )}
               </div>
               <h3 class="text-sm font-bold text-ink">{res.title}</h3>
               <p class="text-xs text-ink-2 mt-1.5 leading-relaxed">{res.description}</p>
             </div>
             {res.bonusPercent && (
-              <div class="mt-3 pt-2.5 border-t border-green-line/60 text-xs font-semibold text-green-ink flex items-center gap-1.5" id="store-credit-bonus-indicator">
+              <div class="mt-3 pt-2.5 border-t border-brand-line/60 text-xs font-semibold text-brand-ink flex items-center gap-1.5" id="store-credit-bonus-indicator">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                 <span>+10% Bonus added to refund</span>
               </div>
@@ -241,18 +241,18 @@ import { MOCK_ORDERS } from '../lib/mock-data';
     <div class="mb-8 pt-6 border-t border-line">
       <span class="eyebrow"><span class="dot"></span> How will you return the items?</span>
       <h2 class="text-xl font-bold text-ink mt-1">Select return method</h2>
-      <p class="text-xs text-muted mt-1">Flexible drop-off options tailored to your location.</p>
+      <p class="text-xs text-muted mt-1">How your item gets back to the store.</p>
 
       <div class="space-y-3 mt-4" id="return-methods-list">
         {RETURN_METHODS.map((m, index) => (
           <label class={`p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 ${
-            index === 0 ? 'border-green ring-2 ring-green-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
+            index === 0 ? 'border-brand ring-2 ring-brand-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
           } method-card`} data-method-id={m.id}>
             <input
               type="radio"
               name="method_choice"
               value={m.id}
-              class="accent-green w-4 h-4 mt-1 cursor-pointer shrink-0"
+              class="accent-brand w-4 h-4 mt-1 cursor-pointer shrink-0"
               checked={index === 0}
             />
             <div class="flex-grow">
@@ -260,10 +260,10 @@ import { MOCK_ORDERS } from '../lib/mock-data';
                 <div class="flex items-center gap-2">
                   <h3 class="text-sm font-bold text-ink">{m.name}</h3>
                   {m.noPrinterNeeded && (
-                    <span class="badge badge-green text-[10px]">No Printer Needed</span>
+                    <span class="badge badge-brand text-[10px]">No Printer Needed</span>
                   )}
                 </div>
-                <span class="text-xs font-mono font-semibold text-green-ink">{m.feeLabel}</span>
+                <span class="text-xs font-mono font-semibold text-brand-ink">{m.feeLabel}</span>
               </div>
               <p class="text-xs text-ink-2 mt-1 leading-relaxed">{m.description}</p>
               <div class="flex items-center gap-4 mt-2 text-[11px] text-muted">
@@ -315,7 +315,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
       <div class="rounded-xl border border-line p-4 bg-bg-2">
         <div class="flex items-center justify-between pb-3 border-b border-line mb-3">
           <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Items Being Returned</h3>
-          <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-items">Edit Items</button>
+          <button type="button" class="text-xs font-semibold text-brand-ink hover:underline" id="btn-edit-items">Edit Items</button>
         </div>
         <div class="space-y-3" id="review-items-list">
           <!-- Rendered dynamically -->
@@ -327,9 +327,9 @@ import { MOCK_ORDERS } from '../lib/mock-data';
         <div class="rounded-xl border border-line p-4 bg-bg-2">
           <div class="flex items-center justify-between pb-2 border-b border-line mb-2.5">
             <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Return Method</h3>
-            <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-method">Change</button>
+            <button type="button" class="text-xs font-semibold text-brand-ink hover:underline" id="btn-edit-method">Change</button>
           </div>
-          <p class="text-sm font-semibold text-ink" id="review-method-name">QR Code Drop-off</p>
+          <p class="text-sm font-semibold text-ink" id="review-method-name">Prepaid Shipping Label</p>
           <p class="text-xs text-muted mt-0.5" id="review-method-carrier">USPS / Happy Returns Bar</p>
           <p class="text-xs text-ink-2 mt-2" id="review-method-fee">Fee: FREE</p>
         </div>
@@ -337,16 +337,16 @@ import { MOCK_ORDERS } from '../lib/mock-data';
         <div class="rounded-xl border border-line p-4 bg-bg-2">
           <div class="flex items-center justify-between pb-2 border-b border-line mb-2.5">
             <h3 class="text-xs font-bold uppercase tracking-wider text-ink-2">Refund Destination</h3>
-            <button type="button" class="text-xs font-semibold text-green-ink hover:underline" id="btn-edit-resolution">Change</button>
+            <button type="button" class="text-xs font-semibold text-brand-ink hover:underline" id="btn-edit-resolution">Change</button>
           </div>
-          <p class="text-sm font-semibold text-ink" id="review-resolution-title">Store Gift Card (+10% Bonus)</p>
-          <p class="text-xs text-muted mt-0.5" id="review-resolution-desc">Digital gift card emailed upon receipt</p>
+          <p class="text-sm font-semibold text-ink" id="review-resolution-title">Original Payment Method</p>
+          <p class="text-xs text-muted mt-0.5" id="review-resolution-desc">Credited back to your original payment method</p>
         </div>
       </div>
 
       <!-- Financial Calculation Box -->
-      <div class="rounded-xl border border-green-line bg-emerald-50/30 p-5 space-y-2.5">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-green-ink mb-2">Estimated Refund Breakdown</h3>
+      <div class="rounded-xl border border-brand-line bg-emerald-50/30 p-5 space-y-2.5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-brand-ink mb-2">Estimated Refund Breakdown</h3>
         <div class="flex justify-between text-xs text-ink-2">
           <span>Items Value Subtotal:</span>
           <span class="font-mono font-medium text-ink" id="calc-subtotal">$0.00</span>
@@ -355,13 +355,13 @@ import { MOCK_ORDERS } from '../lib/mock-data';
           <span>Return Shipping / Handling Fee:</span>
           <span class="font-mono font-medium" id="calc-fee">FREE</span>
         </div>
-        <div class="flex justify-between text-xs text-green-ink font-medium" id="calc-bonus-row">
+        <div class="hidden flex justify-between text-xs text-brand-ink font-medium" id="calc-bonus-row">
           <span>Store Credit Bonus (+10%):</span>
           <span class="font-mono" id="calc-bonus">+$0.00</span>
         </div>
-        <div class="pt-2.5 border-t border-green-line flex justify-between items-baseline">
+        <div class="pt-2.5 border-t border-brand-line flex justify-between items-baseline">
           <span class="text-sm font-bold text-ink">Total Estimated Refund:</span>
-          <span class="text-lg font-bold font-mono text-green-ink" id="calc-total">$0.00</span>
+          <span class="text-lg font-bold font-mono text-brand-ink" id="calc-total">$0.00</span>
         </div>
       </div>
     </div>
@@ -391,103 +391,46 @@ import { MOCK_ORDERS } from '../lib/mock-data';
   <!-- ========================================================================= -->
   <section id="step-6-success" class="portal-card hidden">
     <div class="text-center max-w-md mx-auto mb-8">
-      <div class="w-14 h-14 rounded-full bg-emerald-100 border border-green-line text-green flex items-center justify-center mx-auto mb-4 shadow-sm animate-bounce-short">
+      <div class="w-14 h-14 rounded-full bg-emerald-100 border border-brand-line text-brand flex items-center justify-center mx-auto mb-4 shadow-sm animate-bounce-short">
         <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
-      <span class="badge badge-green mb-2">Return Authorized</span>
+      <span class="badge badge-brand mb-2">Return Authorized</span>
       <h2 class="font-display font-bold text-2xl md:text-3xl text-ink">Return Request Submitted!</h2>
       <p class="text-sm text-ink-2 mt-2 leading-relaxed">
         Your return reference is <strong class="font-mono text-ink font-bold" id="success-return-id">RET-894201</strong>. A confirmation email with your instructions has been sent to <span id="success-customer-email" class="font-medium text-ink">sarah.jenkins@example.com</span>.
       </p>
     </div>
 
-    <!-- QR Code / Label Card -->
+    <!-- Label card -->
     <div class="max-w-lg mx-auto rounded-2xl border border-line bg-bg-2 p-6 text-center mb-8 shadow-xs">
-      <span class="kicker text-[11px] block mb-2" id="success-method-kicker">Mobile Drop-Off QR Code</span>
-
-      <!-- Simulated SVG QR Code -->
-      <div class="bg-white p-4 rounded-xl border border-line-2 inline-block shadow-sm mb-4">
-        <svg class="w-40 h-40 mx-auto" viewBox="0 0 100 100" fill="none">
-          <!-- QR corners -->
-          <rect x="5" y="5" width="26" height="26" rx="4" fill="#101317" />
-          <rect x="9" y="9" width="18" height="18" rx="2" fill="#ffffff" />
-          <rect x="13" y="13" width="10" height="10" rx="1" fill="#00a36b" />
-
-          <rect x="69" y="5" width="26" height="26" rx="4" fill="#101317" />
-          <rect x="73" y="9" width="18" height="18" rx="2" fill="#ffffff" />
-          <rect x="77" y="13" width="10" height="10" rx="1" fill="#00a36b" />
-
-          <rect x="5" y="69" width="26" height="26" rx="4" fill="#101317" />
-          <rect x="9" y="73" width="18" height="18" rx="2" fill="#ffffff" />
-          <rect x="13" y="77" width="10" height="10" rx="1" fill="#00a36b" />
-
-          <!-- QR Data patterns -->
-          <rect x="36" y="8" width="6" height="6" fill="#101317" />
-          <rect x="46" y="14" width="6" height="10" fill="#101317" />
-          <rect x="56" y="8" width="8" height="6" fill="#101317" />
-
-          <rect x="36" y="24" width="8" height="8" fill="#101317" />
-          <rect x="48" y="28" width="14" height="6" fill="#101317" />
-
-          <rect x="8" y="36" width="12" height="6" fill="#101317" />
-          <rect x="24" y="36" width="6" height="14" fill="#101317" />
-          <rect x="34" y="36" width="14" height="14" fill="#00a36b" />
-          <rect x="52" y="38" width="10" height="8" fill="#101317" />
-          <rect x="66" y="36" width="14" height="6" fill="#101317" />
-          <rect x="84" y="36" width="8" height="14" fill="#101317" />
-
-          <rect x="8" y="46" width="12" height="12" fill="#101317" />
-          <rect x="52" y="50" width="8" height="14" fill="#101317" />
-          <rect x="64" y="46" width="16" height="12" fill="#101317" />
-
-          <rect x="36" y="54" width="12" height="12" fill="#101317" />
-          <rect x="36" y="70" width="8" height="14" fill="#101317" />
-          <rect x="48" y="68" width="14" height="8" fill="#101317" />
-          <rect x="66" y="66" width="10" height="10" fill="#101317" />
-          <rect x="80" y="68" width="12" height="12" fill="#00a36b" />
-          <rect x="66" y="80" width="10" height="12" fill="#101317" />
-        </svg>
-      </div>
-
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <button type="button" class="btn btn-accent btn-sm w-full sm:w-auto" id="btn-download-label">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>Download Return Label (PDF)</span>
-        </button>
-        <button type="button" class="btn btn-line btn-sm w-full sm:w-auto" id="btn-print-qr">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 6 2 18 2 18 9"></polyline>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-            <rect x="6" y="14" width="12" height="8"></rect>
-          </svg>
-          <span>Print Drop-off Pass</span>
-        </button>
-      </div>
+      <span class="kicker text-[11px] block mb-2" id="success-method-kicker">Prepaid return label</span>
+      <p class="text-sm text-ink-2 leading-relaxed">
+        The store will review your request. When it is approved, your prepaid label is emailed to you with a link to your return's status page.
+      </p>
+      <!-- Kept for the demo script; the label is sent by email, not downloaded here. -->
+      <button type="button" class="hidden" id="btn-download-label"></button>
+      <button type="button" class="hidden" id="btn-print-qr"></button>
     </div>
 
     <!-- Next Steps Checklist -->
     <div class="max-w-lg mx-auto rounded-xl border border-line p-5 bg-white mb-8">
       <h3 class="text-sm font-bold text-ink mb-3 flex items-center gap-2">
-        <svg class="w-4 h-4 text-green-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        Next Steps & Drop-off Instructions
+        <svg class="w-4 h-4 text-brand-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        What happens next
       </h3>
       <ol class="space-y-2.5 text-xs text-ink-2 pl-4 list-decimal marker:font-mono marker:font-bold marker:text-muted" id="success-instructions-list">
-        <li>Pack items securely in their original packaging or any clean shipping box.</li>
-        <li>Bring the package to any authorized carrier drop-off location or store.</li>
-        <li>Show your QR code or attach the printed shipping label to the outside.</li>
-        <li>Please drop off by <strong class="text-ink font-semibold" id="success-deadline">Sept 19, 2026</strong>.</li>
+        <li>Wait for the store to approve your return. You will get an email.</li>
+        <li>When your prepaid label arrives by email, pack the items securely and attach it.</li>
+        <li>Drop the parcel off with the carrier.</li>
+        <li>Please send it by <strong class="text-ink font-semibold" id="success-deadline">Sept 19, 2026</strong>.</li>
       </ol>
     </div>
 
     <!-- Bottom Actions -->
     <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-line">
-      <a href="#" id="btn-track-this-return" class="btn btn-green w-full sm:w-auto">
+      <a href="#" id="btn-track-this-return" class="btn btn-brand w-full sm:w-auto">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -518,29 +461,13 @@ import { MOCK_ORDERS } from '../lib/mock-data';
     ];
 
     const METHODS = {
-      qr_dropoff: {
-        id: 'qr_dropoff',
-        name: 'QR Code Drop-off (No Printer Needed)',
-        carrier: 'USPS / Happy Returns Bar',
-        fee: 0,
-        feeLabel: 'FREE',
-        noPrinterNeeded: true,
-      },
       prepaid_label: {
         id: 'prepaid_label',
         name: 'Prepaid Shipping Label',
-        carrier: 'UPS Ground',
-        fee: 4.99,
-        feeLabel: '$4.99',
-        noPrinterNeeded: false,
-      },
-      in_store: {
-        id: 'in_store',
-        name: 'Return In-Store',
-        carrier: 'Retail Storefront',
+        carrier: 'USPS via Shippo',
         fee: 0,
-        feeLabel: 'FREE',
-        noPrinterNeeded: true,
+        feeLabel: 'FREE (Protect Product)',
+        noPrinterNeeded: false,
       },
     };
 
@@ -549,8 +476,8 @@ import { MOCK_ORDERS } from '../lib/mock-data';
       currentStep: 1,
       order: null,
       selectedItems: {}, // itemId -> { quantity, reason, notes }
-      selectedResolution: 'store_credit',
-      selectedMethodId: 'qr_dropoff',
+      selectedResolution: 'original_payment',
+      selectedMethodId: 'prepaid_label',
       createdSubmission: null,
     };
 
@@ -635,11 +562,11 @@ import { MOCK_ORDERS } from '../lib/mock-data';
         const label = el.querySelector('[data-step-label]');
 
         if (s < step) {
-          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-green text-white shadow-xs';
+          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-brand text-white shadow-xs';
           circle.innerHTML = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-          if (label) label.className = 'mt-2 text-xs hidden sm:block font-medium tracking-tight text-green-ink';
+          if (label) label.className = 'mt-2 text-xs hidden sm:block font-medium tracking-tight text-brand-ink';
         } else if (s === step) {
-          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-ink text-white ring-4 ring-green-soft shadow-xs';
+          circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold bg-ink text-white ring-4 ring-brand-soft shadow-xs';
           circle.innerHTML = '<span>' + s + '</span>';
           if (label) label.className = 'mt-2 text-xs hidden sm:block font-bold tracking-tight text-ink';
         } else {
@@ -866,11 +793,11 @@ import { MOCK_ORDERS } from '../lib/mock-data';
         if (item.isEligible) {
           html += `
             <div class="p-4 rounded-xl border transition-all flex items-start gap-3.5 sm:gap-4 ${
-              isSelected ? 'border-green ring-2 ring-green-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
+              isSelected ? 'border-brand ring-2 ring-brand-soft bg-emerald-50/10' : 'border-line hover:border-line-2 bg-white'
             }" data-item-card="${item.id}">
               <input
                 type="checkbox"
-                class="item-checkbox accent-green w-5 h-5 rounded mt-1 cursor-pointer shrink-0"
+                class="item-checkbox accent-brand w-5 h-5 rounded mt-1 cursor-pointer shrink-0"
                 data-item-id="${item.id}"
                 ${isSelected ? 'checked' : ''}
               />
@@ -899,7 +826,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
                         : `<span class="text-xs font-mono font-semibold text-ink">1</span>`
                     }
                   </div>
-                  <span class="badge badge-green text-[10px]">Eligible for return</span>
+                  <span class="badge badge-brand text-[10px]">Eligible for return</span>
                 </div>
               </div>
             </div>
@@ -1092,7 +1019,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
           document.querySelectorAll('.resolution-card').forEach((card) => {
             const isMatch = card.getAttribute('data-resolution-type') === state.selectedResolution;
             if (isMatch) {
-              card.className = 'relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between border-green ring-2 ring-green-soft bg-emerald-50/20 resolution-card';
+              card.className = 'relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between border-brand ring-2 ring-brand-soft bg-emerald-50/20 resolution-card';
             } else {
               card.className = 'relative p-4 rounded-xl border cursor-pointer transition-all flex flex-col justify-between border-line hover:border-line-2 bg-white resolution-card';
             }
@@ -1107,7 +1034,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
           document.querySelectorAll('.method-card').forEach((card) => {
             const isMatch = card.getAttribute('data-method-id') === state.selectedMethodId;
             if (isMatch) {
-              card.className = 'p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 border-green ring-2 ring-green-soft bg-emerald-50/10 method-card';
+              card.className = 'p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 border-brand ring-2 ring-brand-soft bg-emerald-50/10 method-card';
             } else {
               card.className = 'p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-4 border-line hover:border-line-2 bg-white method-card';
             }
@@ -1142,7 +1069,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
               <div>
                 <span class="font-bold text-ink">${item.name} (x${itemState.quantity})</span>
                 <p class="text-muted">${item.variant}</p>
-                <p class="text-green-ink mt-0.5">Reason: ${reasonObj ? reasonObj.label : itemState.reason}</p>
+                <p class="text-brand-ink mt-0.5">Reason: ${reasonObj ? reasonObj.label : itemState.reason}</p>
                 ${itemState.notes ? `<p class="text-ink-2 italic">“${itemState.notes}”</p>` : ''}
               </div>
             </div>
@@ -1153,7 +1080,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
 
       elements.reviewItemsList.innerHTML = itemsHtml;
 
-      const methodObj = METHODS[state.selectedMethodId] || METHODS.qr_dropoff;
+      const methodObj = METHODS[state.selectedMethodId] || METHODS.prepaid_label;
       elements.reviewMethodName.textContent = methodObj.name;
       elements.reviewMethodCarrier.textContent = methodObj.carrier;
       elements.reviewMethodFee.textContent = 'Fee: ' + methodObj.feeLabel;
@@ -1213,7 +1140,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
           customerEmail: state.order.email,
           customerName: state.order.customerName,
           status: 'return_approved',
-          method: METHODS[state.selectedMethodId] || METHODS.qr_dropoff,
+          method: METHODS[state.selectedMethodId] || METHODS.prepaid_label,
           resolution: state.selectedResolution,
         };
 
@@ -1250,7 +1177,7 @@ import { MOCK_ORDERS } from '../lib/mock-data';
         elements.btnTrackReturn.href = '/status?id=' + state.createdSubmission.returnId;
       }
 
-      // Drop-off deadline (14 days from now)
+      // Send-by deadline (14 days from now)
       const deadline = new Date();
       deadline.setDate(deadline.getDate() + 14);
       const deadlineStr = deadline.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

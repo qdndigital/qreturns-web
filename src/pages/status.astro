@@ -77,7 +77,7 @@ import { MOCK_RETURNS } from '../lib/mock-data';
           <div>
             <div class="flex items-center gap-2.5">
               <span class="text-lg font-mono font-bold text-ink" id="detail-return-id">RET-894201</span>
-              <span class="badge badge-green text-xs" id="detail-status-badge">In Transit</span>
+              <span class="badge badge-brand text-xs" id="detail-status-badge">In Transit</span>
             </div>
             <p class="text-xs text-muted mt-1" id="detail-order-meta">
               Order #1042 · Submitted Aug 18, 2026 for Sarah Jenkins
@@ -96,19 +96,19 @@ import { MOCK_RETURNS } from '../lib/mock-data';
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 py-5 border-b border-line text-xs">
           <div>
             <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Return Method</span>
-            <span class="font-semibold text-ink mt-0.5 block" id="detail-method-name">QR Code Drop-off</span>
+            <span class="font-semibold text-ink mt-0.5 block" id="detail-method-name">Prepaid Shipping Label</span>
             <span class="text-muted text-[11px]" id="detail-method-carrier">USPS / Happy Returns Bar</span>
           </div>
 
           <div>
             <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Tracking Number</span>
             <span class="font-mono font-semibold text-ink mt-0.5 block" id="detail-tracking-number">9400 1118 9956 2839 0192 84</span>
-            <span class="text-green-ink text-[11px] font-medium" id="detail-tracking-status">In transit via USPS</span>
+            <span class="text-brand-ink text-[11px] font-medium" id="detail-tracking-status">In transit via USPS</span>
           </div>
 
           <div>
             <span class="text-muted uppercase text-[10px] font-mono tracking-wider block">Refund Amount</span>
-            <span class="text-sm font-mono font-bold text-green-ink mt-0.5 block" id="detail-refund-amount">$148.50</span>
+            <span class="text-sm font-mono font-bold text-brand-ink mt-0.5 block" id="detail-refund-amount">$148.50</span>
             <span class="text-muted text-[11px]" id="detail-refund-type">Store Credit (+10% Bonus)</span>
           </div>
         </div>
@@ -146,7 +146,7 @@ import { MOCK_RETURNS } from '../lib/mock-data';
         status: 'in_transit',
         statusLabel: 'In Transit',
         statusClass: 'badge-blue',
-        methodName: 'QR Code Drop-off (FREE)',
+        methodName: 'Prepaid Shipping Label (FREE)',
         carrier: 'USPS Ground Advantage',
         trackingNumber: '9400 1118 9956 2839 0192 84',
         refundAmount: '$148.50',
@@ -171,7 +171,7 @@ import { MOCK_RETURNS } from '../lib/mock-data';
             current: false,
           },
           {
-            title: 'QR Code Drop-off Scanned',
+            title: 'Parcel Scanned by Carrier',
             timestamp: 'Aug 18, 2026 · 04:30 PM',
             desc: 'Scanned at USPS Partner Drop-off station.',
             completed: true,
@@ -207,7 +207,7 @@ import { MOCK_RETURNS } from '../lib/mock-data';
         createdAt: 'Aug 17, 2026',
         status: 'refund_completed',
         statusLabel: 'Refund Completed',
-        statusClass: 'badge-green',
+        statusClass: 'badge-brand',
         methodName: 'Prepaid UPS Ground Label',
         carrier: 'UPS Ground',
         trackingNumber: '1Z9999999999999999',
@@ -281,12 +281,12 @@ import { MOCK_RETURNS } from '../lib/mock-data';
               createdAt: raw.createdAt || 'Today',
               status: raw.status || 'return_approved',
               statusLabel: 'Return Authorized',
-              statusClass: 'badge-green',
-              methodName: raw.method ? raw.method.name : 'QR Code Drop-off',
+              statusClass: 'badge-brand',
+              methodName: raw.method ? raw.method.name : 'Prepaid Shipping Label',
               carrier: raw.method ? raw.method.carrier : 'USPS',
               trackingNumber: raw.tracking ? raw.tracking.trackingNumber : 'Pending Drop-off Scan',
               refundAmount: raw.financials ? '$' + raw.financials.finalRefundAmount.toFixed(2) : '$0.00',
-              refundType: raw.resolution === 'store_credit' ? 'Store Credit (+10% Bonus)' : 'Original Payment',
+              refundType: 'Original Payment',
               items: raw.items ? raw.items.map((i) => ({
                 name: i.item ? i.item.name : 'Item',
                 variant: i.item ? i.item.variant : '',
@@ -306,8 +306,8 @@ import { MOCK_RETURNS } from '../lib/mock-data';
                 },
                 {
                   title: 'Awaiting Carrier Drop-off Scan',
-                  timestamp: 'Pending drop-off',
-                  desc: 'Bring your package or show QR code at any drop-off station.',
+                  timestamp: 'Pending',
+                  desc: 'Drop your package off with the carrier using your prepaid label.',
                   completed: false,
                   current: false,
                 },
@@ -373,16 +373,16 @@ import { MOCK_RETURNS } from '../lib/mock-data';
           <div class="relative flex items-start">
             <div class="absolute -left-[24px] mt-0.5 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
               event.completed
-                ? 'bg-green text-white shadow-xs'
+                ? 'bg-brand text-white shadow-xs'
                 : event.current
-                ? 'bg-ink text-white ring-4 ring-green-soft shadow-xs'
+                ? 'bg-ink text-white ring-4 ring-brand-soft shadow-xs'
                 : 'bg-white text-muted border border-line-2'
             }">
               ${
                 event.completed
                   ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>'
                   : event.current
-                  ? '<span class="w-2 h-2 rounded-full bg-green-bright"></span>'
+                  ? '<span class="w-2 h-2 rounded-full bg-brand-bright"></span>'
                   : '<span class="w-1.5 h-1.5 rounded-full bg-faint"></span>'
               }
             </div>
@@ -409,7 +409,7 @@ import { MOCK_RETURNS } from '../lib/mock-data';
               <div>
                 <h3 class="font-bold text-ink text-sm">${item.name}</h3>
                 <p class="text-muted">${item.variant} · Quantity: ${item.quantity}</p>
-                <p class="text-green-ink mt-0.5 font-medium">Reason: ${item.reason}</p>
+                <p class="text-brand-ink mt-0.5 font-medium">Reason: ${item.reason}</p>
                 ${item.notes ? `<p class="text-ink-2 italic mt-0.5">“${item.notes}”</p>` : ''}
               </div>
             </div>
