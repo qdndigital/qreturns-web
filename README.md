@@ -1,8 +1,8 @@
-# QReturns — Website & Marketing Landing Page
+# Qreturns — Website & Marketing Landing Page
 
-Marketing website and customer return portal for **QReturns** — the Shopify returns, exchanges, and reverse logistics app built to turn product returns into retained revenue.
+Marketing website and customer return portal for **Qreturns** — the Shopify returns, exchanges, and reverse logistics app built to turn product returns into retained revenue.
 
-Built with **Astro 4**, **Tailwind CSS 3**, and the **Polaris Pro** design system (Inter typography, emerald accent tokens, responsive layouts, and zero heavy client framework runtimes).
+Built with **Astro 4**, **Tailwind CSS 3**, and the the **Qreturns brand** (paper, ink and crimson `#BE123C`; Be Vietnam Pro) with responsive layouts and no heavy client framework runtime.
 
 ---
 
@@ -14,6 +14,7 @@ Built with **Astro 4**, **Tailwind CSS 3**, and the **Polaris Pro** design syste
 * **Shopify Integrations (`/integrations`)**: Breakdown of Shopify App Proxy, Store Credit Accounts API, Reverse Deliveries, Draft Orders, and Files API.
 * **Interactive Customer Portal Demo (`/demo`)**: Live return wizard demo with preloaded test account `#1042`.
 * **Live Return Status Tracking (`/status`)**: Multi-stage progress tracking demo (`RET-894201`).
+* **Support (`/support`)**: Netlify contact form (`/thank-you` after sending).
 * **FAQ & Policies (`/faq`)**: Merchant setup instructions and customer policy guides.
 * **GDPR & Legal (`/privacy`, `/terms`)**: Data protection and compliance policies.
 
@@ -22,7 +23,7 @@ Built with **Astro 4**, **Tailwind CSS 3**, and the **Polaris Pro** design syste
 ## Tech Stack
 
 * **Astro 4**: Static site generation and minimal bundle size.
-* **Tailwind CSS 3**: Polaris Pro design tokens (`#00a36b`, `#101317`, `#f6f7f8`).
+* **Tailwind CSS 3**: Brand tokens (`#BE123C`, `#1E1E1A`, `#F4F1EA`) from `qreturns/brand`.
 * **TypeScript**: Strict type safety.
 
 ---

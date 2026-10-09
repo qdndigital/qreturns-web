@@ -1,32 +1,31 @@
 /**
- * QReturns — Polaris Pro Design Tokens
- * 50% Shopify Polaris · 30% Linear · 20% Apple.
- * Clean white background, ink typography, emerald accent, subtle borders.
+ * Qreturns — brand tokens (qreturns/brand/qreturns-brand-guidelines.html)
+ * 60% paper · 30% ink · 10% crimson accent.
  */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}"],
   theme: {
     extend: {
       colors: {
-        bg: "#ffffff",
-        "bg-2": "#f6f7f8",
+        bg: "#F4F1EA",
+        "bg-2": "#EAE5DA",
         surface: "#ffffff",
-        ink: "#101317",
-        "ink-2": "#41464d",
-        muted: "#697079",
-        faint: "#9aa0a8",
-        line: "#e6e7ea",
-        "line-2": "#d3d6da",
-        btn: { DEFAULT: "#111418", hover: "#2a2f37" },
-        green: { DEFAULT: "#00a36b", ink: "#067a55", bright: "#2bd996", soft: "#e9f6f0", line: "#cbe8da" },
-        down: "#c4392f",
+        ink: "#1E1E1A",
+        "ink-2": "#3F3E39",
+        muted: "#5E5C55",
+        faint: "#8A877F",
+        line: "#E2DDD1",
+        "line-2": "#D3CDBF",
+        btn: { DEFAULT: "#1E1E1A", hover: "#34332E" },
+        brand: { DEFAULT: "#BE123C", ink: "#9F1239", bright: "#FDA4AF", soft: "#FFE4E6", line: "#FECDD3" },
+        down: "#C23B22",
         warning: { DEFAULT: "#b45309", soft: "#fef3c7", line: "#fde68a" },
         blue: { DEFAULT: "#2563eb", soft: "#eff6ff", line: "#bfdbfe" },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        display: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        serif: ['"Playfair Display"', "Georgia", "Times New Roman", "serif"],
+        sans: ['"Be Vietnam Pro"', "system-ui", "-apple-system", "sans-serif"],
+        display: ['"Be Vietnam Pro"', "system-ui", "-apple-system", "sans-serif"],
+        serif: ['"Be Vietnam Pro"', "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
       },
       fontSize: {
@@ -41,11 +40,11 @@ export default {
       maxWidth: { wrap: "1080px", wide: "1200px" },
       borderRadius: { lg2: "0.625rem", xl2: "0.875rem", "2xl2": "1.25rem", "3xl2": "1.75rem" },
       boxShadow: {
-        xs: "0 1px 2px rgba(16,24,40,.05)",
-        sm: "0 1px 2px rgba(16,24,40,.06), 0 1px 1px rgba(16,24,40,.04)",
-        card: "0 1px 3px rgba(16,24,40,.06), 0 10px 24px -10px rgba(16,24,40,.08)",
-        float: "0 1px 1px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.18), 0 40px 80px -36px rgba(16,24,40,.22)",
-        glow: "0 0 0 1px rgba(0,163,107,.16), 0 18px 50px -20px rgba(0,163,107,.30)",
+        xs: "0 1px 2px rgba(30,30,26,.05)",
+        sm: "0 1px 2px rgba(30,30,26,.06), 0 1px 1px rgba(30,30,26,.04)",
+        card: "0 1px 3px rgba(30,30,26,.06), 0 10px 24px -10px rgba(30,30,26,.08)",
+        float: "0 1px 1px rgba(30,30,26,.04), 0 8px 24px -12px rgba(30,30,26,.18), 0 40px 80px -36px rgba(30,30,26,.22)",
+        glow: "0 0 0 1px rgba(190,18,60,.16), 0 18px 50px -20px rgba(190,18,60,.30)",
       },
     },
   },

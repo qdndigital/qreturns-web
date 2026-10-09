@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title = `${SITE_NAME} — ${TAGLINE}`,
-  description = 'QReturns automates product returns, size exchanges, and store credit bonuses for Shopify merchants. Give customers a self-service return portal on your domain and retain more revenue.',
+  description = 'Qreturns gives Shopify merchants a self-service return portal on their own domain, return rules, prepaid labels through Shippo, and approval, inspection and refund inside Shopify.',
   noindex = false,
 } = Astro.props;
 
@@ -25,19 +25,19 @@ const jsonld = {
     {
       '@type': 'Organization',
       '@id': 'https://qreturns.com/#org',
-      name: 'QReturns',
+      name: 'Qreturns',
       url: 'https://qreturns.com/',
       email: 'support@qreturns.com',
-      description: 'QReturns is a Shopify returns and exchanges management app with a branded self-service customer portal.',
+      description: 'Qreturns is a Shopify returns management app with a branded self-service customer portal.',
       areaServed: 'Worldwide',
     },
     {
       '@type': 'SoftwareApplication',
       '@id': 'https://qreturns.com/#app',
-      name: 'QReturns — Returns & Exchanges for Shopify',
+      name: 'Qreturns — Returns for Shopify',
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'Shopify',
-      description: 'Automate returns, exchanges, store credit bonuses, and reverse shipping labels on Shopify.',
+      description: 'Manage returns, return rules, prepaid shipping labels and refunds on Shopify.',
       offers: [
         { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD' },
         { '@type': 'Offer', name: 'Starter', price: '19', priceCurrency: 'USD' },
@@ -62,7 +62,7 @@ const jsonld = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="QReturns" />
+    <meta property="og:site_name" content="Qreturns" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

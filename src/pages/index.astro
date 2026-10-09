@@ -5,8 +5,8 @@ import PortalConsole from '../components/PortalConsole.astro';
 import { APP_STORE_URL, DEMO_URL, SITE_NAME, TAGLINE } from '../consts';
 import { PLANS, REVERSE_TRIAL_DAYS, PAYMENT_TRIAL_DAYS, TEASER_BULLETS } from '../plans';
 
-const title = `${SITE_NAME} — Returns & Exchanges for Shopify Merchants`;
-const description = 'Automate returns, exchanges, store credit bonuses, and reverse shipping labels on Shopify. Give customers a self-service portal on your domain and retain up to 40%+ return revenue.';
+const title = `${SITE_NAME} — Returns for Shopify Merchants`;
+const description = 'Give customers a self-service return portal on your own store, set your return rules, and approve, inspect and refund inside Shopify. Prepaid labels through your own Shippo account.';
 
 const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
 const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></svg>';
@@ -18,9 +18,9 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
     <div class="wrap herogrid">
       <div class="hero-copy">
         <span class="eyebrow"><span class="dot"></span> Built for Shopify</span>
-        <h1>Turn product returns into <em>retained revenue.</em></h1>
+        <h1>Returns on your own store, <em>handled in one place.</em></h1>
         <p class="lead">
-          QReturns gives your customers a fast self-service return portal on your domain, automates exchanges and bonus store credit to keep revenue in your store, and streamlines returns inside Shopify Admin.
+          Qreturns gives your customers a self-service return portal on your own domain, applies your return rules automatically, and lets you approve, inspect and refund inside Shopify Admin. Prepaid return labels are bought on your own Shippo account.
         </p>
         <div class="hero-cta">
           <a href={APP_STORE_URL} class="btn btn-accent btn-lg">
@@ -62,12 +62,12 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
         <span class="sep"></span>
         <span class="ti">
           <svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
-          Instant QR Code & Label Pass
+          Prepaid Labels via Shippo
         </span>
         <span class="sep"></span>
         <span class="ti">
           <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-4 8-8 10-4-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          GDPR & Level 2 Data Protected
+          GDPR data requests supported
         </span>
       </div>
     </div>
@@ -77,10 +77,10 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
   <section class="sec">
     <div class="wrap">
       <div class="shead ctr rv mb-10">
-        <span class="eyebrow"><span class="dot"></span> Why QReturns</span>
-        <h2>Manual returns drain your time. <em>And lose the sale.</em></h2>
+        <span class="eyebrow"><span class="dot"></span> Why Qreturns</span>
+        <h2>Manual returns drain your time. <em>And frustrate your customers.</em></h2>
         <p class="lead-c">
-          Handling returns through email tickets and manual refunds frustrates customers and leaks revenue. Here is how QReturns transforms returns into an automated growth engine.
+          Handling returns through email threads, spreadsheets and manual refunds is slow for you and confusing for shoppers. Here is how Qreturns turns it into one tracked flow.
         </p>
       </div>
 
@@ -91,7 +91,7 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
           <ul>
             <li>
               <span class="mk" set:html={crossIcon} />
-              <span><b>100% lost revenue:</b> Customers default to cash refunds because exchanges and credit are difficult to request.</span>
+              <span><b>Endless back-and-forth:</b> Every return starts as an email asking for the order number, the reason and a photo.</span>
             </li>
             <li>
               <span class="mk" set:html={crossIcon} />
@@ -114,15 +114,15 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
 
         <!-- Good column -->
         <div class="ps-col good">
-          <span class="tag">QReturns Automation</span>
+          <span class="tag">Qreturns Automation</span>
           <ul>
             <li>
               <span class="mk" set:html={checkIcon} />
-              <span><b>Retain up to 40%+ revenue:</b> In-portal size exchanges and store credit with configurable bonus incentives (e.g. +10%) save the sale.</span>
+              <span><b>One tracked flow:</b> Every return has a status, a timeline and a refund recorded in Shopify, so nothing is lost between inboxes.</span>
             </li>
             <li>
               <span class="mk" set:html={checkIcon} />
-              <span><b>Self-service in 2 minutes:</b> Customers look up their order, select items, upload photos, and get instant answers 24/7.</span>
+              <span><b>Self-service in minutes:</b> Customers sign in, pick their order and items, choose a reason, and get a status page, any time of day.</span>
             </li>
             <li>
               <span class="mk" set:html={checkIcon} />
@@ -130,11 +130,11 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             </li>
             <li>
               <span class="mk" set:html={checkIcon} />
-              <span><b>Native QR & labels:</b> Instant printerless QR mobile passes and prepaid shipping labels via Shopify Reverse Deliveries.</span>
+              <span><b>Prepaid labels:</b> Labels are bought on your own Shippo account and attached to the return in Shopify, free for the customer when you choose.</span>
             </li>
             <li>
               <span class="mk" set:html={checkIcon} />
-              <span><b>Automated rules & auto-approval:</b> Auto-approve low-risk returns, enforce 30-day windows, and apply restocking fees automatically.</span>
+              <span><b>Automated rules & auto-approval:</b> Auto-approve the returns you always accept, set your own return window, and apply restocking fees automatically.</span>
             </li>
           </ul>
         </div>
@@ -149,7 +149,7 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
         <span class="eyebrow"><span class="dot"></span> Product Showcase</span>
         <h2>Experience the engine in action.</h2>
         <p class="lead-c">
-          Test the customer self-service resolution flow, explore merchant auto-approval rules, and see how retained revenue is tracked in real time.
+          Walk through the customer's return flow and see how your rules decide what can be returned.
         </p>
       </div>
 
@@ -164,9 +164,9 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
     <div class="wrap">
       <div class="shead ctr rv mb-12">
         <span class="eyebrow"><span class="dot"></span> Core Capabilities</span>
-        <h2>Everything you need to master <em>returns & exchanges.</em></h2>
+        <h2>Everything you need to run <em>returns well.</em></h2>
         <p class="lead-c">
-          Built strictly on Shopify Admin APIs, Polaris design principles, and scalable reverse logistics.
+          Built on Shopify's own return, refund and fulfilment APIs, and managed from inside Shopify Admin.
         </p>
       </div>
 
@@ -179,10 +179,10 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             </div>
             <h3>Branded App Proxy Portal</h3>
             <p>
-              Hosted directly on your store domain (<code>yourstore.com/apps/returns</code>). No third-party URLs, no cookie tracking issues, and 100% on-brand styling.
+              Hosted directly on your store domain (<code>yourstore.com/apps/returns</code>). Customers sign in with their store account and see only their own orders. No third-party URLs.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
             <span>Seamless customer trust</span> →
           </div>
         </div>
@@ -193,13 +193,13 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             <div class="ic">
               <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h3>Incentivized Store Credit & Bonuses</h3>
+            <h3>Per-Product Return Policy</h3>
             <p>
-              Add a customizable bonus (e.g. +10% extra credit) when shoppers choose store credit over a refund. A $50 return becomes $55 to spend in your shop.
+              Mark individual products as Free Return or Non-Returnable. Every other product keeps following your normal return rules.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
-            <span>Retain sales revenue</span> →
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
+            <span>Fine-grained control</span> →
           </div>
         </div>
 
@@ -209,13 +209,13 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             <div class="ic">
               <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
             </div>
-            <h3>1-Click Variant & Catalog Exchanges</h3>
+            <h3>Protect Product: Free Return Shipping</h3>
             <p>
-              Allow customers to instantly swap size, color, or style with real-time Shopify inventory reservations. Settle price differences via Shopify draft orders.
+              Offer a small add-on in the cart. Orders that include it get free return shipping, and you buy the label when you approve the return.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
-            <span>Save sizing returns</span> →
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
+            <span>Customer-friendly returns</span> →
           </div>
         </div>
 
@@ -225,13 +225,13 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             <div class="ic">
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             </div>
-            <h3>Mobile QR Passes & Shipping Labels</h3>
+            <h3>Prepaid Labels with Shippo</h3>
             <p>
-              Shoppers without a home printer can generate digital carrier QR codes for easy mobile drop-offs. Download prepaid labels powered by Shopify Reverse Deliveries.
+              Connect your own Shippo account. Qreturns buys the cheapest label, attaches it to the return in Shopify, and emails it to the customer.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
-            <span>Printerless drop-off</span> →
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
+            <span>No manual label work</span> →
           </div>
         </div>
 
@@ -241,12 +241,12 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             <div class="ic">
               <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
-            <h3>Rules Engine & Auto-Approval</h3>
+            <h3>Return Rules & Auto-Approval</h3>
             <p>
-              Set flexible return windows, auto-approve low-risk items, configure restocking fees (% per line), deduct return shipping fees, and exempt clearance items.
+              Set the return window, auto-approve what you always accept, add a restocking fee (% per item) or a return shipping fee, and mark final-sale items.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
             <span>Zero manual overhead</span> →
           </div>
         </div>
@@ -257,13 +257,13 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             <div class="ic">
               <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
-            <h3>Keep-Item / Green Return Rules</h3>
+            <h3>Inspect, Refund, Track</h3>
             <p>
-              Automatically allow customers to keep or donate low-value or damaged items when reverse shipping costs exceed product value. Protect your margins.
+              Mark parcels received, record condition, then refund through Shopify in one step. Analytics show returns and refunds over time.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-green-ink flex items-center gap-1">
-            <span>Save shipping fees</span> →
+          <div class="mt-4 pt-3 border-t border-line text-xs font-semibold text-brand-ink flex items-center gap-1">
+            <span>Clear audit trail</span> →
           </div>
         </div>
       </div>
@@ -275,7 +275,7 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
     <div class="wrap">
       <div class="shead ctr rv mb-12">
         <span class="eyebrow"><span class="dot"></span> Customer & Merchant Journey</span>
-        <h2>How QReturns works in 4 simple steps.</h2>
+        <h2>How Qreturns works in 4 simple steps.</h2>
         <p class="lead-c">
           A seamless flow designed to make returns effortless for buyers while keeping merchants in total control.
         </p>
@@ -287,7 +287,7 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
           <span class="sn">Step 01</span>
           <h3>1. Order Lookup</h3>
           <p>
-            Customer enters their Order Number (e.g. <code>#1042</code>) and email address directly on your store's return page.
+            Customer signs in with their store account on your store's return page and picks the order they want to return.
           </p>
         </div>
 
@@ -296,25 +296,25 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
           <span class="sn">Step 02</span>
           <h3>2. Items & Reason</h3>
           <p>
-            Customer selects eligible items, specifies return reasons from your custom taxonomy, and optionally uploads damage photos.
+            Customer selects eligible items, chooses a return reason from Shopify's list, and adds a photo or note if your policy asks for one.
           </p>
         </div>
 
         <!-- Step 3 -->
         <div class="step">
           <span class="sn">Step 03</span>
-          <h3>3. Choose Resolution</h3>
+          <h3>3. Return Method</h3>
           <p>
-            Shopper chooses between Store Credit (+bonus %), instant size/variant exchange, or original payment method refund.
+            Shopper sees how the item gets back to you and what return shipping costs, if anything. Protected orders and free-return products ship free.
           </p>
         </div>
 
         <!-- Step 4 -->
         <div class="step">
           <span class="sn">Step 04</span>
-          <h3>4. Instant Drop-Off & Sync</h3>
+          <h3>4. Approve, Inspect, Refund</h3>
           <p>
-            Instant QR pass or shipping label is issued. QReturns syncs return state, restocks inventory, and completes the workflow in Shopify.
+            You approve (or your rules do), the label is sent, and when the parcel arrives you inspect it and refund through Shopify.
           </p>
         </div>
       </div>
@@ -329,7 +329,7 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
           <span class="eyebrow"><span class="dot"></span> Natively Integrated</span>
           <h2>Shopify is the source of truth. <em>Never out of sync.</em></h2>
           <p class="lead">
-            QReturns coordinates directly with Shopify's newest APIs (2026-04). We don't maintain a detached ledger—returns, refunds, draft orders, and store credit live directly in your Shopify Admin.
+            Qreturns coordinates directly with Shopify's newest APIs (2026-04). We don't maintain a detached ledger—returns, refunds and labels live directly in your Shopify Admin.
           </p>
           <ul class="checklist">
             <li>
@@ -338,11 +338,11 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
             </li>
             <li>
               <span set:html={checkIcon} />
-              <span><b>Native Return APIs:</b> Uses <code>returnProcess</code> and <code>reverseDeliveryCreateWithShipping</code> without deprecated mutations.</span>
+              <span><b>Native Return APIs:</b> Uses Shopify's current return and refund mutations, without deprecated ones.</span>
             </li>
             <li>
               <span set:html={checkIcon} />
-              <span><b>Store Credit & Gift Cards:</b> Direct integration with Shopify Store Credit Accounts with automatic Gift Card fallbacks.</span>
+              <span><b>Your carriers, your account:</b> Return labels are bought on your own Shippo account; Qreturns never holds your money.</span>
             </li>
             <li>
               <span set:html={checkIcon} />
@@ -354,13 +354,13 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
         <div class="rounded-2xl border border-line bg-bg-2 p-6 sm:p-8 space-y-4">
           <div class="flex items-center justify-between pb-3 border-b border-line">
             <span class="font-mono text-xs font-bold text-ink">Shopify Ecosystem Architecture</span>
-            <span class="badge badge-green text-[0.65rem]">Direct GraphQL</span>
+            <span class="badge badge-brand text-[0.65rem]">Direct GraphQL</span>
           </div>
 
           <div class="space-y-3">
             <div class="p-3.5 rounded-xl bg-white border border-line flex items-center justify-between text-xs">
               <div class="flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-green"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
                 <span class="font-bold text-ink">Your Shopify Storefront</span>
               </div>
               <span class="font-mono text-muted">your-store.com/apps/returns</span>
@@ -370,12 +370,12 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
               <svg class="w-4 h-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </div>
 
-            <div class="p-3.5 rounded-xl bg-white border-2 border-green flex items-center justify-between text-xs shadow-xs">
+            <div class="p-3.5 rounded-xl bg-white border-2 border-brand flex items-center justify-between text-xs shadow-xs">
               <div class="flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-green"></span>
-                <span class="font-bold text-ink">QReturns Core Engine</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
+                <span class="font-bold text-ink">Qreturns Core Engine</span>
               </div>
-              <span class="badge badge-green text-[0.65rem]">Rules & Retention</span>
+              <span class="badge badge-brand text-[0.65rem]">Rules & Workflow</span>
             </div>
 
             <div class="flex justify-center text-muted">
@@ -384,8 +384,8 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
 
             <div class="p-3.5 rounded-xl bg-white border border-line flex items-center justify-between text-xs">
               <div class="flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-green"></span>
-                <span class="font-bold text-ink">Shopify Admin (Orders, Inventory & Credit)</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
+                <span class="font-bold text-ink">Shopify Admin (Orders, Returns & Refunds)</span>
               </div>
               <span class="font-mono text-muted">Source of Truth</span>
             </div>
@@ -448,28 +448,28 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
         <span class="eyebrow"><span class="dot"></span> FAQ</span>
         <h2>Frequently asked questions</h2>
         <p class="lead-c">
-          Everything you need to know about setting up QReturns on your Shopify store.
+          Everything you need to know about setting up Qreturns on your Shopify store.
         </p>
       </div>
 
       <div class="faq rv">
         <details>
           <summary>
-            <span>How does QReturns run on my store domain without redirects?</span>
+            <span>How does Qreturns run on my store domain without redirects?</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <p>
-            QReturns uses the native <strong>Shopify App Proxy</strong>. When shoppers visit <code>yourstore.com/apps/returns</code>, Shopify securely proxies the request to QReturns with cryptographic HMAC signature verification. Your customers stay entirely on your brand's domain.
+            Qreturns uses the native <strong>Shopify App Proxy</strong>. When shoppers visit <code>yourstore.com/apps/returns</code>, Shopify securely proxies the request to Qreturns with cryptographic HMAC signature verification. Your customers stay entirely on your brand's domain.
           </p>
         </details>
 
         <details>
           <summary>
-            <span>How does the Store Credit Bonus incentive work?</span>
+            <span>What can customers ask for?</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <p>
-            You can specify an optional bonus percentage (for example, +10%) in your merchant settings. If a customer returns a $50 item and chooses Store Credit, QReturns automatically issues a $55 store gift card or Shopify store credit balance. It is the single most effective way to retain revenue that would otherwise be lost to cash refunds.
+            Right now customers request a refund to their original payment method. Store credit and exchanges are being finished and are not offered yet.
           </p>
         </details>
 
@@ -485,11 +485,11 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
 
         <details>
           <summary>
-            <span>Does QReturns support printerless mobile drop-offs?</span>
+            <span>Who pays for the return label?</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <p>
-            Yes! Customers without home printers can generate a digital QR code mobile pass on their smartphone to present at authorized carrier drop-off locations (e.g. USPS or partner locations). Traditional downloadable PDF prepaid shipping labels are also supported.
+            You do, for orders that include the Protect Product and for products you mark as Free Return. For other orders the customer pays the label price at a Shopify checkout before the return is created. Labels are bought on your own Shippo account.
           </p>
         </details>
 
@@ -510,17 +510,17 @@ const crossIcon = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></sv
   <section class="sec" style="padding-top: 0;">
     <div class="wrap">
       <div class="cta-box rv">
-        <span class="eyebrow" style="color: #2bd996; justify-content: center;">
-          <span class="dot" style="background: #2bd996;"></span> Get Started in 60 Seconds
+        <span class="eyebrow" style="color: #FDA4AF; justify-content: center;">
+          <span class="dot" style="background: #FDA4AF;"></span> Get Started in 60 Seconds
         </span>
         <h2 class="font-display font-bold text-3xl sm:text-4xl md:text-5xl mt-4 mb-4 tracking-tightest">
           Ready to turn returns into your growth engine?
         </h2>
         <p class="text-gray-300 text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-          Install QReturns today with 14 days of full Growth access. Keep more revenue in your store and give customers a delightful self-service experience.
+          Install Qreturns today with 14 days of full Growth access. Give customers a self-service way to return, and keep every return in one place.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <a href={APP_STORE_URL} class="btn btn-green btn-lg">
+          <a href={APP_STORE_URL} class="btn btn-brand btn-lg">
             Install on Shopify <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
           <a href={DEMO_URL} class="btn btn-line btn-lg" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">

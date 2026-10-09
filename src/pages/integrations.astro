@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { APP_STORE_URL, SITE_NAME } from '../consts';
 
 const title = `Shopify Integrations & Ecosystem — ${SITE_NAME}`;
-const description = 'How QReturns deeply integrates with Shopify App Proxy, Reverse Deliveries, Store Credit Accounts API, Draft Orders, and Files API.';
+const description = 'How Qreturns integrates with Shopify App Proxy, the Returns and Refunds APIs, Reverse Deliveries, Draft Orders and Files, and with Shippo for return labels.';
 
 const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
 ---
@@ -14,7 +14,7 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
       <div class="crumb"><a href="/">~</a> / integrations</div>
       <h1>Built directly on <em>Shopify APIs</em>.</h1>
       <p>
-        QReturns is purpose-built for the modern Shopify platform (API Version 2026-04). We integrate natively with Shopify's core return objects, customer credit systems, and logistics APIs without brittle workarounds.
+        Qreturns is purpose-built for the modern Shopify platform (API Version 2026-04). We integrate natively with Shopify's return, refund and logistics objects, and use your own Shippo account for carrier labels, without brittle workarounds.
       </p>
     </div>
   </section>
@@ -42,18 +42,18 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           <span class="utag on mt-4">Native Surface</span>
         </div>
 
-        <!-- 2. Store Credit & Gift Cards -->
+        <!-- 2. Shippo -->
         <div class="card">
           <div>
             <div class="ic">
               <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             </div>
-            <h3>Store Credit & Gift Cards API</h3>
+            <h3>Shippo (Your Account)</h3>
             <p>
-              Directly interfaces with Shopify's Store Credit Accounts API on new customer accounts, and automatically falls back to Shopify Gift Cards on legacy stores.
+              Return labels are bought on your own Shippo account, so carrier postage is billed to you directly. Qreturns never holds or advances your money.
             </p>
           </div>
-          <span class="utag on mt-4">Native Credit</span>
+          <span class="utag on mt-4">Carrier Labels</span>
         </div>
 
         <!-- 3. Reverse Deliveries & RFOs -->
@@ -64,13 +64,13 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
             </div>
             <h3>Reverse Deliveries & Labels</h3>
             <p>
-              Uses <code>reverseDeliveryCreateWithShipping</code> to issue carrier-tracked shipping labels and manages Reverse Fulfillment Orders (RFO) across single or multi-warehouse locations.
+              Attaches the Shippo label to the return in Shopify as a reverse delivery, so the label and tracking number sit on the return you already manage.
             </p>
           </div>
           <span class="utag on mt-4">Shopify Logistics</span>
         </div>
 
-        <!-- 4. Draft Orders for Exchanges -->
+        <!-- 4. Draft Orders for return shipping payment -->
         <div class="card">
           <div>
             <div class="ic">
@@ -78,10 +78,10 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
             </div>
             <h3>Draft Orders API</h3>
             <p>
-              When customers swap for different catalog items that have price differences, QReturns generates Shopify draft orders and customer checkout links to settle the balance effortlessly.
+              When a customer owes the return-shipping fee, Qreturns creates a Shopify draft order and checkout link. The return is created only after Shopify confirms the payment.
             </p>
           </div>
-          <span class="utag on mt-4">Exchange Settlement</span>
+          <span class="utag on mt-4">Shipping Fee Payment</span>
         </div>
 
         <!-- 5. Shopify Files API -->
@@ -151,20 +151,16 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           </div>
           <div class="space-y-2 text-xs text-ink-2">
             <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
-              <span>Shopify Protected Customer Data Level 2</span>
-              <span class="badge badge-green text-[0.65rem]">Compliant</span>
-            </div>
-            <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
               <span>GDPR / CCPA Data Erasure Webhooks</span>
-              <span class="badge badge-green text-[0.65rem]">Automated</span>
+              <span class="badge badge-brand text-[0.65rem]">Automated</span>
             </div>
             <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
               <span>HMAC-SHA256 Request Verification</span>
-              <span class="badge badge-green text-[0.65rem]">Active</span>
+              <span class="badge badge-brand text-[0.65rem]">Active</span>
             </div>
             <div class="flex items-center justify-between p-2.5 rounded-lg bg-bg-2">
               <span>Shopify Billing API (Line-item billing)</span>
-              <span class="badge badge-green text-[0.65rem]">Verified</span>
+              <span class="badge badge-brand text-[0.65rem]">Verified</span>
             </div>
           </div>
         </div>
@@ -177,12 +173,12 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
     <div class="wrap">
       <div class="cta-box rv">
         <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">
-          Connect QReturns with your Shopify store.
+          Connect Qreturns with your Shopify store.
         </h2>
         <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
           Install the app in 1 click and have your customer return portal live today.
         </p>
-        <a href={APP_STORE_URL} class="btn btn-green btn-lg">
+        <a href={APP_STORE_URL} class="btn btn-brand btn-lg">
           Install from Shopify App Store
         </a>
       </div>
