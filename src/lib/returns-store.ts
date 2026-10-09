@@ -89,8 +89,8 @@ export function createReturnSubmission(params: {
   const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
   const itemsTotal = params.selectedItems.reduce((sum, item) => sum + item.item.price * item.quantity, 0);
-  const returnFee = params.resolution === 'store_credit' ? 0 : params.method.fee;
-  const bonusCredit = params.resolution === 'store_credit' ? (itemsTotal * STORE_CONFIG.bonusStoreCreditPercent) / 100 : 0;
+  const returnFee = params.method.fee;
+  const bonusCredit = 0;
   const finalRefundAmount = Math.max(0, itemsTotal - returnFee + bonusCredit);
 
   const submission: ReturnSubmission = {
@@ -128,7 +128,7 @@ export function createReturnSubmission(params: {
         status: 'return_approved',
         title: 'Return Authorized & Label Generated',
         description: params.method.noPrinterNeeded
-          ? 'Mobile QR Code ready for instant drop-off.'
+          ? 'Prepaid return label ready.'
           : 'Prepaid return label generated and ready for printing.',
         timestamp: `${dateStr} · ${timeStr}`,
         completed: true,
@@ -137,8 +137,8 @@ export function createReturnSubmission(params: {
       {
         status: 'in_transit',
         title: 'Package In Transit',
-        description: 'Waiting for initial scan at drop-off carrier location.',
-        timestamp: 'Pending drop-off',
+        description: 'Waiting for the carrier to scan your parcel.',
+        timestamp: 'Pending',
         completed: false,
         current: false,
       },
@@ -152,7 +152,7 @@ export function createReturnSubmission(params: {
       },
       {
         status: 'refund_completed',
-        title: params.resolution === 'store_credit' ? 'Store Credit Issued' : 'Refund Processed',
+        title: 'Refund Processed',
         description: `$${finalRefundAmount.toFixed(2)} will be credited.`,
         timestamp: 'Pending inspection',
         completed: false,
