@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 import { APP_STORE_URL, DEMO_URL, SITE_NAME } from '../consts';
 import { REVERSE_TRIAL_DAYS } from '../plans';
 
-const title = `How QReturns Works — Complete Returns & Exchanges Lifecycle`;
-const description = 'Explore the complete QReturns architecture: customer self-service, rules engine, revenue-saving resolutions, reverse shipping logistics, and Shopify native sync.';
+const title = `How Qreturns Works — The Returns Lifecycle`;
+const description = 'See how Qreturns works: customer self-service sign-in, your return rules, prepaid labels through Shippo, and approval, inspection and refund inside Shopify.';
 
 const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
 ---
@@ -13,9 +13,9 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
   <section class="phero">
     <div class="wrap">
       <div class="crumb"><a href="/">~</a> / how it works</div>
-      <h1>How the QReturns engine <em>works</em>.</h1>
+      <h1>How the Qreturns engine <em>works</em>.</h1>
       <p>
-        No black box. QReturns provides a clean, four-stage returns lifecycle that delights shoppers, protects merchant margins through incentivized store credit and exchanges, and syncs directly with Shopify APIs.
+        No black box. Qreturns provides a clean, four-stage returns lifecycle that is simple for shoppers, keeps you in control with your own rules, and syncs directly with Shopify APIs.
       </p>
     </div>
   </section>
@@ -27,30 +27,30 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
         <span class="eyebrow"><span class="dot"></span> Stage by Stage</span>
         <h2>The end-to-end customer return journey.</h2>
         <p class="lead-c" style="margin-left: 0; text-align: left;">
-          Designed to resolve returns in under 2 minutes while guiding customers toward exchanges and store credit.
+          Customers can start a return in a few minutes, and you see it in Shopify Admin straight away.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 rv">
         <!-- Stage 1 -->
         <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
-          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+          <span class="font-mono text-xs font-bold text-brand-ink bg-brand-soft px-2.5 py-1 rounded border border-brand-line">
             Stage 01
           </span>
-          <h3 class="font-display font-bold text-lg text-ink">Order Lookup & Verification</h3>
+          <h3 class="font-display font-bold text-lg text-ink">Sign In & Pick an Order</h3>
           <p class="text-sm text-ink-2 leading-relaxed">
-            Customers visit <code>yourstore.com/apps/returns</code> on your domain. They enter their Order Number (supporting <code>#1042</code>, <code>1042</code>, or <code>ORD-1042</code>) and email/phone.
+            Customers visit <code>yourstore.com/apps/returns</code> on your domain and sign in with their store account. They see only their own orders, with a Return button on each one that can be returned.
           </p>
           <ul class="checklist">
-            <li><span set:html={checkIcon} /><span>No customer login or password required</span></li>
+            <li><span set:html={checkIcon} /><span>Only the owner of an order can return it</span></li>
             <li><span set:html={checkIcon} /><span>Shopify App Proxy with HMAC signature security</span></li>
-            <li><span set:html={checkIcon} /><span>Instant validation against Shopify fulfillment date</span></li>
+            <li><span set:html={checkIcon} /><span>Return window checked against your rules</span></li>
           </ul>
         </div>
 
         <!-- Stage 2 -->
         <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
-          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+          <span class="font-mono text-xs font-bold text-brand-ink bg-brand-soft px-2.5 py-1 rounded border border-brand-line">
             Stage 02
           </span>
           <h3 class="font-display font-bold text-lg text-ink">Item Selection & Reason Taxonomy</h3>
@@ -58,42 +58,42 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
             The customer sees all items from their order with quantities and variant details. They select eligible items and provide structured return reasons.
           </p>
           <ul class="checklist">
-            <li><span set:html={checkIcon} /><span>Visual item picker with ineligible/final sale indicators</span></li>
-            <li><span set:html={checkIcon} /><span>Structured reason codes (Too small, defective, style, etc.)</span></li>
-            <li><span set:html={checkIcon} /><span>Optional damage photo uploads via Shopify Files API</span></li>
+            <li><span set:html={checkIcon} /><span>Item picker with final-sale and non-returnable indicators</span></li>
+            <li><span set:html={checkIcon} /><span>Return reasons taken from Shopify's own list</span></li>
+            <li><span set:html={checkIcon} /><span>Optional photo uploads, stored in Shopify Files</span></li>
           </ul>
         </div>
 
         <!-- Stage 3 -->
         <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
-          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+          <span class="font-mono text-xs font-bold text-brand-ink bg-brand-soft px-2.5 py-1 rounded border border-brand-line">
             Stage 03
           </span>
-          <h3 class="font-display font-bold text-lg text-ink">Incentivized Resolution Choice</h3>
+          <h3 class="font-display font-bold text-lg text-ink">Return Method & Shipping</h3>
           <p class="text-sm text-ink-2 leading-relaxed">
-            QReturns presents available resolutions configured by your return policy rules, highlighting value-added incentives.
+            The customer sees how the item gets back to you and what return shipping costs, based on your rules and products.
           </p>
           <ul class="checklist">
-            <li><span set:html={checkIcon} /><span>Store Gift Card with customizable bonus (e.g. +10%)</span></li>
-            <li><span set:html={checkIcon} /><span>1-Click size/color variant exchange</span></li>
-            <li><span set:html={checkIcon} /><span>Original payment method refund</span></li>
-            <li><span set:html={checkIcon} /><span>Keep-item / green return for low-value goods</span></li>
+            <li><span set:html={checkIcon} /><span>Free return shipping on orders with the Protect Product</span></li>
+            <li><span set:html={checkIcon} /><span>Free Return products ship free; others pay the label price at checkout</span></li>
+            <li><span set:html={checkIcon} /><span>Refund to the original payment method</span></li>
+            <li><span set:html={checkIcon} /><span>Store credit and exchanges are coming later</span></li>
           </ul>
         </div>
 
         <!-- Stage 4 -->
         <div class="p-6 md:p-8 rounded-2xl border border-line bg-white shadow-xs space-y-3">
-          <span class="font-mono text-xs font-bold text-green-ink bg-green-soft px-2.5 py-1 rounded border border-green-line">
+          <span class="font-mono text-xs font-bold text-brand-ink bg-brand-soft px-2.5 py-1 rounded border border-brand-line">
             Stage 04
           </span>
-          <h3 class="font-display font-bold text-lg text-ink">QR Code / Label & Shopify Sync</h3>
+          <h3 class="font-display font-bold text-lg text-ink">Approve, Label & Refund</h3>
           <p class="text-sm text-ink-2 leading-relaxed">
-            Once submitted, low-risk requests can auto-approve instantly, providing mobile QR passes or printable shipping labels.
+            Returns your rules accept open straight away; the others wait for you. Approved returns get a prepaid label, and you refund after inspection.
           </p>
           <ul class="checklist">
-            <li><span set:html={checkIcon} /><span>Mobile QR drop-off pass (no printer needed)</span></li>
-            <li><span set:html={checkIcon} /><span>Prepaid PDF shipping label download</span></li>
-            <li><span set:html={checkIcon} /><span>Real-time status tracking timeline at <code>/status</code></span></li>
+            <li><span set:html={checkIcon} /><span>Prepaid label bought on your own Shippo account</span></li>
+            <li><span set:html={checkIcon} /><span>Inspect the parcel, then Complete & refund through Shopify</span></li>
+            <li><span set:html={checkIcon} /><span>Status page and timeline for you and the customer</span></li>
           </ul>
         </div>
       </div>
@@ -108,12 +108,12 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           <span class="eyebrow"><span class="dot"></span> Merchant Governance</span>
           <h2>Automate rules with total precision.</h2>
           <p class="lead">
-            Create granular policies that balance customer convenience with profitability. The QReturns rules engine evaluates criteria hierarchically.
+            Create granular policies that balance customer convenience with profitability. The Qreturns rules engine evaluates criteria hierarchically.
           </p>
           <ul class="checklist">
             <li>
               <span set:html={checkIcon} />
-              <span><b>Delivery-Anchored Return Windows:</b> Calculate return windows from the carrier delivery date rather than order creation date.</span>
+              <span><b>Flexible Return Windows:</b> Count the window from the order, fulfilment or delivery date.</span>
             </li>
             <li>
               <span set:html={checkIcon} />
@@ -121,7 +121,7 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
             </li>
             <li>
               <span set:html={checkIcon} />
-              <span><b>Product & Tag Exemptions:</b> Automatically exclude final sale items, clearance collections, or intimate goods.</span>
+              <span><b>Product Policy:</b> Mark products as Free Return or Non-Returnable, and flag final-sale items.</span>
             </li>
             <li>
               <span set:html={checkIcon} />
@@ -137,19 +137,19 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           <div class="space-y-3 text-xs">
             <div class="p-3 rounded-xl bg-bg-2 border border-line">
               <div class="font-bold text-ink mb-1">1. Eligibility Check</div>
-              <div class="text-muted">Is order within 30 days of delivery? Are items free of "final-sale" tags?</div>
+              <div class="text-muted">Is the order inside your return window? Are items free of "final-sale" tags?</div>
             </div>
             <div class="p-3 rounded-xl bg-bg-2 border border-line">
-              <div class="font-bold text-ink mb-1">2. Resolution Filtering</div>
-              <div class="text-muted">Which resolutions are allowed for this collection? Is store credit bonus active?</div>
+              <div class="font-bold text-ink mb-1">2. Product Check</div>
+              <div class="text-muted">Is this product on your Free Return or Non-Returnable list?</div>
             </div>
             <div class="p-3 rounded-xl bg-bg-2 border border-line">
               <div class="font-bold text-ink mb-1">3. Fee Calculation</div>
               <div class="text-muted">Calculate restocking fee (% per line) + return shipping fee (fixed amount).</div>
             </div>
-            <div class="p-3 rounded-xl bg-green-soft/40 border border-green-line">
-              <div class="font-bold text-green-ink mb-1">4. Decision: Auto-Approve vs. Manual Review</div>
-              <div class="text-ink-2">If criteria pass: Issue Reverse Delivery label. If manual: Flag in Admin.</div>
+            <div class="p-3 rounded-xl bg-brand-soft/40 border border-brand-line">
+              <div class="font-bold text-brand-ink mb-1">4. Decision: Auto-Approve vs. Manual Review</div>
+              <div class="text-ink-2">If criteria pass: Buy the Shippo label. If manual: Flag in Admin.</div>
             </div>
           </div>
         </div>
@@ -172,7 +172,7 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
         <div class="flex flex-wrap items-center justify-between gap-3 text-center text-xs font-mono font-bold">
           <span class="p-2.5 rounded-lg bg-bg-2 border border-line">REQUESTED</span>
           <span>→</span>
-          <span class="p-2.5 rounded-lg bg-green-soft text-green-ink border border-green-line">APPROVED</span>
+          <span class="p-2.5 rounded-lg bg-brand-soft text-brand-ink border border-brand-line">APPROVED</span>
           <span>→</span>
           <span class="p-2.5 rounded-lg bg-bg-2 border border-line">LABEL_ISSUED</span>
           <span>→</span>
@@ -180,7 +180,7 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           <span>→</span>
           <span class="p-2.5 rounded-lg bg-bg-2 border border-line">DELIVERED</span>
           <span>→</span>
-          <span class="p-2.5 rounded-lg bg-green-soft text-green-ink border border-green-line">COMPLETED</span>
+          <span class="p-2.5 rounded-lg bg-brand-soft text-brand-ink border border-brand-line">COMPLETED</span>
         </div>
         <p class="text-xs text-muted text-center mt-6">
           Forward-only tracking ranks prevent out-of-order webhook delivery from regressing return states.
@@ -197,10 +197,10 @@ const checkIcon = '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
           Experience the complete workflow today.
         </h2>
         <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
-          Try the interactive customer return portal demo or install QReturns on your Shopify store with {REVERSE_TRIAL_DAYS} days full access.
+          Try the interactive customer return portal demo or install Qreturns on your Shopify store with {REVERSE_TRIAL_DAYS} days full access.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <a href={APP_STORE_URL} class="btn btn-green btn-lg">Install on Shopify</a>
+          <a href={APP_STORE_URL} class="btn btn-brand btn-lg">Install on Shopify</a>
           <a href={DEMO_URL} class="btn btn-line btn-lg" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
             Try interactive demo
           </a>

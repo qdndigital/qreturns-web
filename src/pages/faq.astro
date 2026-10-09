@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { APP_STORE_URL, DEMO_URL, SITE_NAME, SUPPORT_EMAIL } from '../consts';
 
 const title = `Frequently Asked Questions — ${SITE_NAME}`;
-const description = 'Common questions and answers about setting up QReturns on Shopify, App Proxy configuration, return policies, store credit bonuses, and shipping labels.';
+const description = 'Common questions and answers about setting up Qreturns on Shopify, App Proxy configuration, return policies, per-product rules, and shipping labels.';
 ---
 
 <Base title={title} description={description}>
@@ -12,7 +12,7 @@ const description = 'Common questions and answers about setting up QReturns on S
       <div class="crumb"><a href="/">~</a> / faq</div>
       <h1>Frequently Asked <em>Questions</em></h1>
       <p>
-        Everything you need to know about setting up QReturns on your Shopify store, managing return policies, and giving customers a delightful self-service experience.
+        Everything you need to know about setting up Qreturns on your Shopify store, managing return policies, and giving customers a delightful self-service experience.
       </p>
     </div>
   </section>
@@ -23,26 +23,26 @@ const description = 'Common questions and answers about setting up QReturns on S
       <div class="max-w-3xl mx-auto space-y-12">
         <div>
           <div class="eyebrow mb-3"><span class="dot"></span> Merchant Setup & Shopify</div>
-          <h2 class="font-display font-bold text-xl sm:text-2xl text-ink mb-6">Installing & Configuring QReturns</h2>
+          <h2 class="font-display font-bold text-xl sm:text-2xl text-ink mb-6">Installing & Configuring Qreturns</h2>
 
           <div class="faq">
             <details open>
               <summary>
-                <span>How long does it take to install and launch QReturns?</span>
+                <span>How long does it take to install and launch Qreturns?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                Less than 2 minutes. Install QReturns from the Shopify App Store, configure your desired return window (e.g. 30 days) and resolutions, and your portal is immediately live at <code>yourstore.com/apps/returns</code> with zero code or theme edits required.
+                Less than 2 minutes. Install Qreturns from the Shopify App Store, configure your desired return window (e.g. 30 days) and resolutions, and your portal is immediately live at <code>yourstore.com/apps/returns</code> with zero code or theme edits required.
               </p>
             </details>
 
             <details>
               <summary>
-                <span>Does QReturns require modifying my Shopify theme?</span>
+                <span>Does Qreturns require modifying my Shopify theme?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                No theme code modifications are necessary. QReturns operates natively through the Shopify App Proxy. You can easily add a link to your return portal in your website's navigation header, footer menu, or order confirmation emails.
+                No theme code modifications are necessary. Qreturns operates natively through the Shopify App Proxy. You can easily add a link to your return portal in your website's navigation header, footer menu, or order confirmation emails.
               </p>
             </details>
 
@@ -52,37 +52,37 @@ const description = 'Common questions and answers about setting up QReturns on S
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                You can create rules based on product tags, collections, return window elapsed days, or return reasons. Low-risk return requests that satisfy your rules can be auto-approved instantly, issuing the customer a prepaid shipping label or mobile QR code pass without manual merchant intervention.
+                You can create rules based on product tags, collections, return window elapsed days, or return reasons. Return requests that satisfy your rules can be approved automatically, and a prepaid label is bought for them when one applies, without you lifting a finger.
               </p>
             </details>
 
             <details>
               <summary>
-                <span>How does the +10% Store Credit Bonus save revenue?</span>
+                <span>What can customers ask for?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                When a customer requests a return, QReturns highlights Store Gift Cards with an optional bonus percentage (e.g., +10%). A $50 return becomes a $55 gift card. Merchants report retaining up to 40%+ of return value in-store rather than losing funds to credit card refunds.
+                Today customers request a refund to the original payment method. Store credit and exchanges are being finished and aren't offered to customers yet.
               </p>
             </details>
 
             <details>
               <summary>
-                <span>Can customers exchange items for different sizes or colors?</span>
+                <span>Can I mark some products as not returnable, or free to return?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                Yes! QReturns offers 1-click variant exchanges directly within the return portal. Customers can swap for another size or color with instant Shopify inventory validation and reservations.
+                Yes. In Settings → Product policy you can put products on a Free Return list (no return shipping charge) or a Non-Returnable list. Products on neither list follow your normal return policy.
               </p>
             </details>
 
             <details>
               <summary>
-                <span>What is a "Keep-Item" or "Green Return" rule?</span>
+                <span>Who pays for the return label?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                For damaged goods or low-value items where return shipping costs exceed the item value, you can configure QReturns to let the customer keep or donate the product while issuing an instant store credit or replacement.
+                You do for orders with the Protect Product and for Free Return products. For any other order the customer pays the label price at a Shopify checkout before the return is created. Labels are bought on your own Shippo account.
               </p>
             </details>
           </div>
@@ -91,26 +91,26 @@ const description = 'Common questions and answers about setting up QReturns on S
         <!-- Customer Experience Questions -->
         <div id="policies">
           <div class="eyebrow mb-3"><span class="dot"></span> Customer Experience</div>
-          <h2 class="font-display font-bold text-xl sm:text-2xl text-ink mb-6">Customer Returns & Drop-Offs</h2>
+          <h2 class="font-display font-bold text-xl sm:text-2xl text-ink mb-6">Customer Returns</h2>
 
           <div class="faq">
             <details>
               <summary>
-                <span>How do customers look up their order in the portal?</span>
+                <span>How do customers find their order in the portal?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                Customers simply enter their Shopify Order Number (e.g., <code>#1042</code>) and their customer email address or phone number.
+                Customers sign in with their store account and see a list of their own orders, each with a Return button.
               </p>
             </details>
 
             <details>
               <summary>
-                <span>Do customers need a printer to return items?</span>
+                <span>Do customers need an account?</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                No printer is required! Shoppers can select the Mobile QR Code pass option to receive a digital barcode on their phone, which they present at any authorized carrier drop-off location.
+                Yes, a store account. Signing in is what makes sure only the owner of an order can return it.
               </p>
             </details>
 
@@ -120,7 +120,7 @@ const description = 'Common questions and answers about setting up QReturns on S
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <p>
-                Each return is assigned a unique tracking ID (e.g., <code>RET-894201</code>). Customers can track their return progress on your live status page and receive automated email and SMS notification updates as their package travels through delivery and inspection.
+                Each return gets a return number (like <code>R-1016-1</code>) and a status page. Customers also get email updates when the return is approved, the label is ready, and the refund is done.
               </p>
             </details>
           </div>
@@ -148,10 +148,10 @@ const description = 'Common questions and answers about setting up QReturns on S
           Ready to simplify your Shopify returns?
         </h2>
         <p class="text-gray-300 text-base max-w-xl mx-auto mb-8">
-          Install QReturns today with 14 days of full Growth access.
+          Install Qreturns today with 14 days of full Growth access.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <a href={APP_STORE_URL} class="btn btn-green btn-lg">Install on Shopify Free</a>
+          <a href={APP_STORE_URL} class="btn btn-brand btn-lg">Install on Shopify Free</a>
           <a href={DEMO_URL} class="btn btn-line btn-lg" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
             Try live demo
           </a>

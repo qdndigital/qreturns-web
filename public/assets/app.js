@@ -1,4 +1,4 @@
-/* QReturns — Marketing site shared scripts */
+/* Qreturns — Marketing site shared scripts */
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -71,5 +71,28 @@
         if (e.matches) setMenu(false);
       }
     );
+  }
+  /* contact form — AJAX submit to Netlify (no reload). Native POST to
+     action="/thank-you" stays the no-JS fallback. */
+  var cf = document.getElementById('brief-form');
+  if (cf) {
+    var st = document.getElementById('form-status');
+    var msg = {
+      sending: cf.getAttribute('data-msg-sending') || 'Sending…',
+      ok: cf.getAttribute('data-msg-ok') || 'Thanks — we got your message.',
+      err: cf.getAttribute('data-msg-err') || 'Could not send right now — email support@qreturns.com.'
+    };
+    var say = function (m, cls) { if (st) { st.textContent = m; st.className = 'form-status' + (cls ? ' ' + cls : ''); } };
+    cf.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(cf);
+      var btn = cf.querySelector('button[type=submit]');
+      if (btn) btn.disabled = true;
+      say(msg.sending);
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); cf.reset(); say(msg.ok, 'ok'); })
+        .catch(function () { say(msg.err, 'err'); })
+        .finally(function () { if (btn) btn.disabled = false; });
+    });
   }
 })();

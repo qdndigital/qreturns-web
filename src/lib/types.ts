@@ -54,7 +54,7 @@ export interface ReturnReasonOption {
   requiresPhoto?: boolean;
 }
 
-export type ReturnMethodId = 'qr_dropoff' | 'prepaid_label' | 'in_store';
+export type ReturnMethodId = 'prepaid_label' | 'qr_dropoff' | 'in_store';
 
 export interface ReturnMethod {
   id: ReturnMethodId;
